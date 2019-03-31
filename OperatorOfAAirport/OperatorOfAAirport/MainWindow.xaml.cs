@@ -24,5 +24,10 @@ namespace OperatorOfAAirport
         {
             InitializeComponent();
         }
+
+        private void Click_ExitButton(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

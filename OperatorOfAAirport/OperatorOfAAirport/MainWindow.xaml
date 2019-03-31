@@ -14,9 +14,45 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         Title="LogIn" Height="400" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
-    
-    <Grid Background="Gray">
-        <StackPanel Margin="30">
+
+    <Grid>
+        <materialDesign:Flipper HorizontalAlignment="Center" VerticalAlignment="Center"  >
+            <materialDesign:Flipper.FrontContent>
+                <StackPanel>
+
+                   
+                    <TextBox materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="15,150,15,10"></TextBox>
+                    
+                    <PasswordBox x:Name="PasswordBox" materialDesign:HintAssist.Hint="Password" Margin="15" />
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
+                        <Button Margin="15 30" Content="Log in"/>
+                        <Button Margin="15 30" Content="Sign up" Command="{x:Static materialDesign:Flipper.FlipCommand}"/>
+                    </StackPanel>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" Click="Click_ExitButton">EXIT</Button>
+              
+                </StackPanel>
+            </materialDesign:Flipper.FrontContent>
+
+            <materialDesign:Flipper.BackContent>
+                <StackPanel>
+                    
+                    <TextBox materialDesign:HintAssist.Hint="Your First Name"  Margin="15,115,15,0"/>
+                    <TextBox materialDesign:HintAssist.Hint="Your Last Name"  Margin="15,20,15,0"/>
+                    <TextBox materialDesign:HintAssist.Hint="Your Middle Name"  Margin="15,20,15,0"/>
+                    <TextBox materialDesign:HintAssist.Hint="Login" Margin="15,20,15,0"/>
+                    <PasswordBox materialDesign:HintAssist.Hint="Password"  Margin="15,20,15,0"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 10">
+                        <Button Margin="15 30" Content="Back" Command="{x:Static materialDesign:Flipper.FlipCommand}" Style="{StaticResource MaterialDesignFlatButton}"/>
+                        <Button Margin="15 30" Content="Log in" Command="{x:Static materialDesign:Flipper.FlipCommand}"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Flipper.BackContent>
+                
+        </materialDesign:Flipper>
+        
+        <!-- <StackPanel Margin="30">
 
             <TextBox materialDesign:HintAssist.Hint="Username" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="15"/>
             <PasswordBox x:Name="PasswordBox" materialDesign:HintAssist.Hint="Password" Margin="15"/>
@@ -26,6 +62,6 @@
                 <Button Margin="15 30" Content="Log in"/>
                 <Button Margin="15 30" Content="Sign up"/>
             </StackPanel>
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Window>
