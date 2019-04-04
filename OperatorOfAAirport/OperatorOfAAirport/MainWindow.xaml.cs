@@ -32,7 +32,9 @@ namespace OperatorOfAAirport
 
         private void Button_Click_Login(object sender, RoutedEventArgs e)
         {
-            
+            Window1 window1 = new Window1();
+            window1.Show();
+            this.Close();
         }
     }
 }
