@@ -43,7 +43,7 @@
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 10">
                         <Button Margin="15 30" Content="Back" Command="{x:Static materialDesign:Flipper.FlipCommand}" Style="{StaticResource MaterialDesignFlatButton}"/>
-                        <Button Margin="15 30" Content="Sing up" Command="{x:Static materialDesign:Flipper.FlipCommand}"/>
+                        <Button Margin="15 30" Content="Sing up" />
                     </StackPanel>
                 </StackPanel>
             </materialDesign:Flipper.BackContent>

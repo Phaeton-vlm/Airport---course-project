@@ -19,10 +19,13 @@ namespace OperatorOfAAirport
     /// </summary>
     public partial class Window1 : Window
     {
+        Page1 page1 = new Page1();
+        Page2 page2 = new Page2();
+
         public Window1()
         {
             InitializeComponent();
-            
+            FrameCh.Navigate(page1);
         }
 
 
@@ -40,7 +43,30 @@ namespace OperatorOfAAirport
 
         private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            int index = ListViewMenu.SelectedIndex;
+
+            switch(index)
+            {
+                case 0:
+                    FrameCh.Navigate(page1);
+                    break;
+                case 1:
+                    FrameCh.Navigate(page2);
+                    break;
+            }
+
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Button_ClickLogout(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
         }
     }
 }
