@@ -4,11 +4,36 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:OperatorOfAAirport"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
       mc:Ignorable="d" 
       d:DesignHeight="532" d:DesignWidth="1010"
       Title="Page1">
 
-    <Grid Background="Chartreuse">
-        <TextBox Width="200" Height="20" BorderBrush="Black"></TextBox>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+
+        <materialDesign:ColorZone Grid.Row="0" Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="Bottom" >
+
+            <StackPanel  Orientation="Horizontal" Height="76" Width="1010">
+            </StackPanel>
+        </materialDesign:ColorZone>
+
+        <materialDesign:ColorZone Grid.Row="2" Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="Top" >
+
+            <StackPanel  Orientation="Horizontal" Height="35" Width="1010">
+            </StackPanel>
+        </materialDesign:ColorZone>
+        <!--<Separator Grid.Row="1" VerticalAlignment="Top"/>-->
     </Grid>
 </Page>
