@@ -113,28 +113,28 @@
 
                     <ListViewItem x:Name="ItemFlight" Height="60" Foreground="{DynamicResource PrimaryHueDarkBrush}">
                             <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Airport" Height="25" Width="25" Margin="10"/>
+                            <materialDesign:PackIcon Kind="Airport" Height="30" Width="30" Margin="10,0,10,0"/>
                                 <TextBlock Text="FLIGHTS" VerticalAlignment="Center" Margin="20 10"/>
                             </StackPanel>
                         </ListViewItem>
 
                     <ListViewItem x:Name="ItempAircraft" Height="60" Foreground="{DynamicResource PrimaryHueDarkBrush}">
                             <StackPanel Orientation="Horizontal" >
-                            <materialDesign:PackIcon Kind="Aeroplane" Height="25" Width="25" Margin="10" />
+                            <materialDesign:PackIcon Kind="Aeroplane" Height="30" Width="30" Margin="10,0,10,0" />
                                 <TextBlock Text="AIRCRAFTS" VerticalAlignment="Center" Margin="20 10"/>
                             </StackPanel>
                         </ListViewItem>
 
                     <ListViewItem Height="60" Foreground="{DynamicResource PrimaryHueDarkBrush}">
                             <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="UserSupervisorCircle" Height="25" Width="25" Margin="10"/>
+                            <materialDesign:PackIcon Kind="UserSupervisorCircle" Height="30" Width="30" Margin="10,0,10,0"/>
                                 <TextBlock Text="AIRLINES" VerticalAlignment="Center"  Margin="20 10"/>
                             </StackPanel>
                         </ListViewItem>
 
                     <ListViewItem Height="60" Foreground="{DynamicResource PrimaryHueDarkBrush}">
                             <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="FileDocument" Height="25" Width="25" Margin="10"/>
+                            <materialDesign:PackIcon Kind="FileDocument" Height="30" Width="30" Margin="10,0,10,0"/>
                                 <TextBlock Text="REPORT" VerticalAlignment="Center"  Margin="20 10"/>
                             </StackPanel>
                         </ListViewItem>
