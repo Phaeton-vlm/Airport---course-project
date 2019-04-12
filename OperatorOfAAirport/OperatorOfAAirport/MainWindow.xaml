@@ -35,22 +35,22 @@
             <materialDesign:Flipper.BackContent>
                 <StackPanel>
 
-                    <TextBox Width="180" materialDesign:HintAssist.Hint="Your First Name"  Margin="15,115,15,0"/>
-                    <TextBox Width="180" materialDesign:HintAssist.Hint="Your Last Name"  Margin="15,20,15,0"/>
-                    <TextBox Width="180" materialDesign:HintAssist.Hint="Your Middle Name"  Margin="15,20,15,0"/>
-                    <TextBox Width="180" materialDesign:HintAssist.Hint="Login" Margin="15,20,15,0"/>
-                    <PasswordBox Width="180" materialDesign:HintAssist.Hint="Password"  Margin="15,20,15,0"/>
+                    <TextBox x:Name="_TextBoxFirstName" Width="180" materialDesign:HintAssist.Hint="First Name"  Margin="15,115,15,0"/>
+                    <TextBox x:Name="_TextBoxSecondName" Width="180" materialDesign:HintAssist.Hint="Last Name"  Margin="15,20,15,0"/>
+                    <TextBox x:Name="_TextBoxMiddleName" Width="180" materialDesign:HintAssist.Hint="Middle Name"  Margin="15,20,15,0"/>
+                    <TextBox x:Name="_TextBoxLoginReg" Width="180" materialDesign:HintAssist.Hint="Login" Margin="15,20,15,0"/>
+                    <PasswordBox x:Name="_TextBoxPasswordReg" Width="180" materialDesign:HintAssist.Hint="Password"  Margin="15,20,15,0"/>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 10">
                         <Button Margin="15 30" Content="Back" Command="{x:Static materialDesign:Flipper.FlipCommand}" Style="{StaticResource MaterialDesignFlatButton}"/>
-                        <Button Margin="15 30" Content="Sing up" />
+                        <Button Margin="15 30" Content="Sing up" Click="ButtonRegestry"/>
                     </StackPanel>
                 </StackPanel>
             </materialDesign:Flipper.BackContent>
 
         </materialDesign:Flipper>
         
-<!--/////////////////////////////////////////////////Диалоговое окно//////////////////////////////////////-->
+<!--/////////////////////////////////////////////////Диалоговое окно выход//////////////////////////////////////-->
         <materialDesign:DialogHost IsOpen="False" x:Name="DialogWindowExit">
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
@@ -62,6 +62,29 @@
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
-
+        
+        <!--/////////////////////////////////////////////////Неверный пароль//////////////////////////////////////-->
+        <materialDesign:DialogHost IsOpen="False" x:Name="WrongPassOrLogin">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="180">
+                    <TextBlock x:Name="TextBlockMessage" Foreground="Red" TextWrapping="Wrap" HorizontalAlignment="Center"></TextBlock>
+                    <Button HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=WrongPassOrLogin}" Style="{StaticResource MaterialDesignFlatButton}" Content="OK"></Button>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        
+        <!--/////////////////////////////////////////////////Повторить пароль//////////////////////////////////////-->
+        <materialDesign:DialogHost IsOpen="True" x:Name="RepitPassword">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="180">
+                    <TextBlock x:Name="TextBlockChangedPass" Foreground="{DynamicResource PrimaryHueDarkBrush}" TextWrapping="Wrap" HorizontalAlignment="Left">Повторите пароль</TextBlock>
+                    <PasswordBox x:Name="_RepitPasswordBox" materialDesign:HintAssist.Hint="Password" Margin="0,10,0,0"></PasswordBox>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Margin="0,5,0,0" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=RepitPassword}" Style="{StaticResource MaterialDesignFlatButton}" Content="CANCEL"></Button>
+                        <Button x:Name="ContinueReg" Click="ContinueReg_Click" Margin="0,5,0,0" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Content="OK"></Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
     </Grid>
 </Window>
