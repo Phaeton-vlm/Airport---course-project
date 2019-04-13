@@ -17,23 +17,25 @@ using System.Windows.Shapes;
 namespace OperatorOfAAirport
 {
     /// <summary>
-    /// Логика взаимодействия для Page2.xaml
+    /// Логика взаимодействия для Page3.xaml
     /// </summary>
-    public partial class Page2 : Page
+    public partial class Page3 : Page
     {
         string connectionString = "Data Source=DESKTOP-989RPMD;Initial Catalog=AirportDB;Integrated Security=True";
 
-        public Page2()
+        public Page3()
         {
             InitializeComponent();
-      
-            DataContext dboperator = new DataContext(connectionString);
-            var aircrafts = dboperator.GetTable<Aircraft>();
 
-            foreach (var item in aircrafts)
+            DataContext dboperator = new DataContext(connectionString);
+            var airlines = dboperator.GetTable<Airline>();
+
+            foreach (var item in airlines)
             {
-                DataGridAircraft.Items.Add(item);
+                DataGridAirline.Items.Add(item);
             }
+
+            //DataGridAirline.Items
         }
     }
 }

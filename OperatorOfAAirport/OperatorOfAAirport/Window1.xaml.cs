@@ -21,11 +21,14 @@ namespace OperatorOfAAirport
     {
         Page1 page1 = new Page1();
         Page2 page2 = new Page2();
+        Page3 page3 = new Page3();
 
         public Window1()
         {
             InitializeComponent();
             FrameCh.Navigate(page1);
+            ChangeIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Airport;
+            ChangeHeader.Text = "РАСПИСАНИЕ";
         }
 
 
@@ -49,9 +52,22 @@ namespace OperatorOfAAirport
             {
                 case 0:
                     FrameCh.Navigate(page1);
+                    ChangeIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Airport;
+                    ChangeHeader.Text = "РАСПИСАНИЕ";
                     break;
                 case 1:
                     FrameCh.Navigate(page2);
+                    ChangeIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Aeroplane;
+                    ChangeHeader.Text = "САМОЛЕТЫ";
+                    break;
+                case 2:
+                    FrameCh.Navigate(page3);
+                    ChangeIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.UserSupervisorCircle;
+                    ChangeHeader.Text = "АВИАКОМПАНИИ";
+                    break;
+                case 3:
+                    ChangeIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.FileDocument;
+                    ChangeHeader.Text = "ОТЧЕТ";
                     break;
             }
 
@@ -71,7 +87,7 @@ namespace OperatorOfAAirport
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            DragMove();
+           // DragMove();
         }
     }
 }

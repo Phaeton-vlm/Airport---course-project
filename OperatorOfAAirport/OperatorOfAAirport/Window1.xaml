@@ -53,9 +53,10 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition  Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-       
-        
 
+
+        
+        
         <materialDesign:ColorZone Mode="PrimaryDark" Padding=" 18">
             <StackPanel >
                 <materialDesign:PopupBox HorizontalAlignment="Right" PlacementMode="BottomAndAlignRightEdges">
@@ -67,13 +68,13 @@
                         <Button FontSize="16" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowExit}" Content="Exit" Style="{StaticResource MaterialDesignFlatButton}"/>
                     </StackPanel>
                 </materialDesign:PopupBox>
-                
-                
             </StackPanel>
-
         </materialDesign:ColorZone>
 
-       
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxHeight="62">
+            <materialDesign:PackIcon x:Name="ChangeIcon" VerticalAlignment="Center" Width="30" Height="30" Margin="10,0,10,0"/>
+            <TextBlock x:Name="ChangeHeader" VerticalAlignment="Center" FontSize="30"></TextBlock>
+        </StackPanel>
 <!--///////////////////////////////////////////////////////////////-->
 
         <Frame x:Name="FrameCh"  Grid.Row="2"  NavigationUIVisibility="Hidden" Margin="70,0,0,0"></Frame>

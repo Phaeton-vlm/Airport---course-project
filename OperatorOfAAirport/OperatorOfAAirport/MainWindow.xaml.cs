@@ -53,16 +53,6 @@ namespace OperatorOfAAirport
                 window1.Show();
                 this.Close();
             }
-
-
-
-            //Table<Operator> operators = dboperator.GetTable<Operator>();
-
-            //foreach (var item in operators)
-            //{
-            //       MessageBox.Show($"{ item.OperatorID} {item.FirstName} {item.SecondName}");
-            //}
-
         }
 
         private void ButtonRegestry(object sender, RoutedEventArgs e)
@@ -100,25 +90,45 @@ namespace OperatorOfAAirport
 
         private void ContinueReg_Click(object sender, RoutedEventArgs e)
         {
-
-            DataContext dboperator = new DataContext(connectionString);
-
-            if (_RepitPasswordBox.Password == _TextBoxPasswordReg.Password)
+            try
             {
-                ///Operator operatornew = new Operator { FirstName = _TextBoxFirstName.Text, SecondName = _TextBoxSecondName.Text, Login = _TextBoxLoginReg.Text, Password = _TextBoxPasswordReg.Password, MiddleName = _TextBoxMiddleName.Text };
-                // dboperator.GetTable<Operator>().InsertOnSubmit(operatornew);
-                //dboperator.SubmitChanges();
+                DataContext dboperator = new DataContext(connectionString);
+
+                if (_RepitPasswordBox.Password == _TextBoxPasswordReg.Password)
+                {
+                    Operator operatornew = new Operator { FirstName = _TextBoxFirstName.Text, SecondName = _TextBoxSecondName.Text, Login = _TextBoxLoginReg.Text, Password = _TextBoxPasswordReg.Password, MiddleName = _TextBoxMiddleName.Text.Length == 0 ? null : _TextBoxMiddleName.Text };
+                    dboperator.GetTable<Operator>().InsertOnSubmit(operatornew);
+                    dboperator.SubmitChanges();
+
+                    RepitPassword.IsOpen = false;
+                    TextBlockMessage.Text = "Регистрация прошла успешно";
+                    WrongPassOrLogin.IsOpen = true;
+
+                    _TextBoxFirstName.Clear();
+                    _TextBoxSecondName.Clear();
+                    _TextBoxMiddleName.Clear();
+                    _TextBoxLoginReg.Clear();
+                    _TextBoxPasswordReg.Clear();
+                    FlipperAcc.IsFlipped = false;
+                }
+                else
+                {
+                    TextBlockChangedPass.Text = "Неверный пароль";
+                    TextBlockChangedPass.Foreground = Brushes.Red;
+                }
+            }
+            catch (Exception ex)
+            {
+                //TextBlockMessage.Text = $"Ошибка: {ex.Message}, Источник: {ex.Source}";
                 RepitPassword.IsOpen = false;
-                TextBlockMessage.Text = "Регистрация прошла успешно";
+                TextBlockMessage.Text = "Пользователь с таким логином уже зарегестрирован";
                 WrongPassOrLogin.IsOpen = true;
             }
-            else
-            {
-                //RepitPassword.IsOpen = false;
-                TextBlockChangedPass.Text = "Неверный пароль";
-                TextBlockChangedPass.Foreground = Brushes.Red;
-               
-            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

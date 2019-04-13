@@ -35,5 +35,20 @@
             </StackPanel>
         </materialDesign:ColorZone>
         <!--<Separator Grid.Row="1" VerticalAlignment="Top"/>-->
+
+        <Grid Grid.Row="1">
+            <DataGrid  x:Name="DataGridAircraft" IsReadOnly="True" Margin="0 5 0 5" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="True" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+
+                <DataGrid.Columns>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding FlightNumber}" Header="Рейс" />
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding AirlineName}" Header="Афиакомпания" />
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding DepatureCity}" Header="Вылет"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding ArrivalCity}" Header="Направление"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding DepartureTime}" Header="Время вылета"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding ArrivalTime}" Header="Время прилета"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </Grid>
     </Grid>
 </Page>

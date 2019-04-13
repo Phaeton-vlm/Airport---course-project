@@ -16,7 +16,7 @@
         Title="LogIn" Height="400" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
 
     <Grid>
-        <materialDesign:Flipper HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="d">
+        <materialDesign:Flipper x:Name="FlipperAcc" HorizontalAlignment="Center" VerticalAlignment="Center" >
             <materialDesign:Flipper.FrontContent>
                 <StackPanel >
                     <TextBox Width="180" x:Name="LoginTextBox" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="15,150,15,10" ></TextBox>
@@ -24,8 +24,8 @@
                     <PasswordBox Width="180" x:Name="PasswordBox" materialDesign:HintAssist.Hint="Password" Margin="15" />
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
-                        <Button Margin="15 30" Content="Log in" Click="Button_Click_Login"/>
                         <Button Margin="15 30" Content="Sign up" Command="{x:Static materialDesign:Flipper.FlipCommand}"/>
+                        <Button Margin="15 30" Content="Log in" Click="Button_Click_Login"/>
                     </StackPanel>
                     <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowExit}" Style="{StaticResource MaterialDesignFlatButton}">EXIT</Button>
 
@@ -74,7 +74,7 @@
         </materialDesign:DialogHost>
         
         <!--/////////////////////////////////////////////////Повторить пароль//////////////////////////////////////-->
-        <materialDesign:DialogHost IsOpen="True" x:Name="RepitPassword">
+        <materialDesign:DialogHost IsOpen="False" x:Name="RepitPassword">
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="180">
                     <TextBlock x:Name="TextBlockChangedPass" Foreground="{DynamicResource PrimaryHueDarkBrush}" TextWrapping="Wrap" HorizontalAlignment="Left">Повторите пароль</TextBlock>
