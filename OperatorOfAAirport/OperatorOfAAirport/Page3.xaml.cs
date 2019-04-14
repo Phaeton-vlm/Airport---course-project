@@ -27,15 +27,14 @@ namespace OperatorOfAAirport
         {
             InitializeComponent();
 
-            DataContext dboperator = new DataContext(connectionString);
-            var airlines = dboperator.GetTable<Airline>();
+            MyDataContext dboperator = new MyDataContext(connectionString);
+            var airlines = dboperator.airlines;
 
-            foreach (var item in airlines)
-            {
-                DataGridAirline.Items.Add(item);
-            }
-
-            //DataGridAirline.Items
+            DataGridAirline.ItemsSource = airlines.ToList();
+            //foreach (var item in airlines)
+            //{
+            //    DataGridAirline.Items.Add(item);
+            //}
         }
     }
 }

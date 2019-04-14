@@ -32,7 +32,7 @@ namespace OperatorOfAAirport
         private void Button_Click_Login(object sender, RoutedEventArgs e)
         {
 
-            DataContext dboperator = new DataContext(connectionString);
+            MyDataContext dboperator = new MyDataContext(connectionString);
            // var entry = dboperator.GetTable<Operator>().Where(op => op.Login == LoginTextBox.Text).Where(op => op.Password == PasswordBox.Password);
 
             //foreach (var item in entry)
@@ -40,7 +40,8 @@ namespace OperatorOfAAirport
 
             //}
 
-            IEnumerable<Operator> entry = dboperator.ExecuteQuery<Operator>("SELECT * FROM Operator WHERE OperatorLogin COLLATE Latin1_General_CS_AS = {0} AND OperatorPassword COLLATE Latin1_General_CS_AS = {1}", LoginTextBox.Text,PasswordBox.Password);
+            var entry = dboperator.ExecuteQuery<Operator>("SELECT * FROM Operator WHERE OperatorLogin COLLATE Latin1_General_CS_AS = {0} AND OperatorPassword COLLATE Latin1_General_CS_AS = {1}", LoginTextBox.Text,PasswordBox.Password).ToList();
+          
 
             if (entry.Count() == 0)
             {
@@ -49,6 +50,7 @@ namespace OperatorOfAAirport
             }
             else
             {
+                CurrentUser.CurrentID = entry.Single().OperatorID;
                 Window1 window1 = new Window1();
                 window1.Show();
                 this.Close();
@@ -92,7 +94,7 @@ namespace OperatorOfAAirport
         {
             try
             {
-                DataContext dboperator = new DataContext(connectionString);
+                MyDataContext dboperator = new MyDataContext(connectionString);
 
                 if (_RepitPasswordBox.Password == _TextBoxPasswordReg.Password)
                 {

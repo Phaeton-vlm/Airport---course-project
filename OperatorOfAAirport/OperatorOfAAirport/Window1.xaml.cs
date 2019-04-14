@@ -22,6 +22,7 @@ namespace OperatorOfAAirport
         Page1 page1 = new Page1();
         Page2 page2 = new Page2();
         Page3 page3 = new Page3();
+        Page4 page4 = new Page4();
 
         public Window1()
         {
@@ -66,6 +67,7 @@ namespace OperatorOfAAirport
                     ChangeHeader.Text = "АВИАКОМПАНИИ";
                     break;
                 case 3:
+                    FrameCh.Navigate(page4);
                     ChangeIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.FileDocument;
                     ChangeHeader.Text = "ОТЧЕТ";
                     break;

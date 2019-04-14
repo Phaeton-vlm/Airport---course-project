@@ -20,36 +20,67 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="6*"></RowDefinition>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="56"/>
         </Grid.RowDefinitions>
 
         <materialDesign:ColorZone Grid.Row="0" Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="Bottom" >
 
-            <StackPanel  Orientation="Horizontal" Height="76" Width="1010">
+            <StackPanel  Orientation="Horizontal" Height="55" Width="1010">
             </StackPanel>
         </materialDesign:ColorZone>
 
         <materialDesign:ColorZone Grid.Row="2" Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="Top" >
 
-            <StackPanel  Orientation="Horizontal" Height="35" Width="1010">
+            <StackPanel  Orientation="Horizontal" Height="56" Width="1010">
             </StackPanel>
         </materialDesign:ColorZone>
 
         <!--/////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
         <Grid Grid.Row="1">
-            <DataGrid  x:Name="DataGridAircraft" IsReadOnly="True" Margin="0 5 0 5" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="True" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid HorizontalContentAlignment="Center" x:Name="DataGridAircraft" SelectionMode="Single" IsReadOnly="False" Margin="0 5 0 5" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
 
                 <DataGrid.Columns>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding SideNumber}" Header="Номер" />
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding AircraftModel}" Header="Модель"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding EconomyClass}" Header="Эконом класс"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding BusinessClass}" Header="Бизнес класс"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding FirstClass}" Header="Первый класс"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding VIPClass}" Header="VIP класс"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding IsFree}" Header="Доступен"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding SideNumber,Mode=OneTime}" Header="Номер" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding AircraftModel,Mode=OneTime}" Header="Модель" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding EconomyClass,Mode=OneTime}" Header="Эконом класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding BusinessClass,Mode=OneTime}" Header="Бизнес класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding FirstClass,Mode=OneTime}" Header="Первый класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding VIPClass,Mode=OneTime}" Header="VIP класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding IsFree,Mode=OneTime}" Header="Доступен" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                 </DataGrid.Columns>
                 
             </DataGrid>
         </Grid>
+
+        <Grid Grid.Row="2">
+            <StackPanel Orientation="Horizontal" Margin="2" HorizontalAlignment="Right">
+                <Button Margin="0,0,10,0" Style="{StaticResource MaterialDesignFlatButton}">Удалить</Button>
+                <Button Click="AddButtonClick" Margin="10,0,10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}"  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=AddAircraft}">Добавить</Button>
+            </StackPanel>
+        </Grid>
+
+        <materialDesign:DialogHost  IsOpen="False" x:Name="AddAircraft" Grid.RowSpan="3" >
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="200" >
+                    <TextBlock Foreground="{DynamicResource PrimaryHueDarkBrush}" TextWrapping="Wrap" HorizontalAlignment="Left">Заполните данные</TextBlock>
+                    
+                    <TextBox x:Name="_TextBlockSideNumber" materialDesign:HintAssist.Hint="Бортовой номер" MaxLength="10" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="_TextBlockModel" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Модель" MaxLength="40" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="_TextBlockEconomyClass" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Эконом класс" MaxLength="4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="_TextBlockEconomyClass_PreviewTextInput" />
+                    <TextBox x:Name="_TextBlockBusinessClass" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Бизнес класс" MaxLength="4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="_TextBlockEconomyClass_PreviewTextInput"/>
+                    <TextBox x:Name="_TextBlockFirstClass" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Первый класс" MaxLength="4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="_TextBlockEconomyClass_PreviewTextInput" />
+                    <TextBox x:Name="_TextBlockVipClass" Margin="0,5,0,0" materialDesign:HintAssist.Hint="VIP класс" MaxLength="4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="_TextBlockEconomyClass_PreviewTextInput" />
+
+                    <TextBlock x:Name="TextBlockMessgeAddAircraft" Visibility="Hidden" Margin="0,15,0,5" Foreground="{DynamicResource PrimaryHueDarkBrush}" TextWrapping="Wrap" HorizontalAlignment="Left" MaxHeight="30">Самолет добавлен</TextBlock>
+                    
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Click="Cuncel_ButtonClick" Margin="0,5,0,0" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=AddAircraft}" Style="{StaticResource MaterialDesignFlatButton}" Content="CANCEL"></Button>
+                        <Button Click="ButtonClick_AddAircraft" Margin="0,5,0,0" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Content="OK"></Button>
+                    </StackPanel>
+                   
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+
     </Grid>
 </Page>

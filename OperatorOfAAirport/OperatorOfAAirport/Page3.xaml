@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:OperatorOfAAirport"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       TextElement.FontWeight="Regular"
       TextElement.FontSize="13"
@@ -36,11 +36,10 @@
         </materialDesign:ColorZone>
 <!--/////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
         <Grid Grid.Row="1">
-            <DataGrid  x:Name="DataGridAirline" IsReadOnly="True" Margin="0 5 0 5" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="True" materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
-      
+            <DataGrid  x:Name="DataGridAirline" IsReadOnly="False" Margin="0 5 0 5" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
                 <DataGrid.Columns>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding AirlineName}" Header="Название" />
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding Country}" Header="Страна"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding AirlineName,Mode=OneTime}" Header="Название" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn IsReadOnly="True" Binding="{Binding Country,Mode=OneTime}" Header="Страна" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

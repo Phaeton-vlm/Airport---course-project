@@ -37,15 +37,15 @@
         <!--<Separator Grid.Row="1" VerticalAlignment="Top"/>-->
 
         <Grid Grid.Row="1">
-            <DataGrid  x:Name="DataGridAircraft" IsReadOnly="True" Margin="0 5 0 5" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="True" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid x:Name="DataGridFlights" CanUserDeleteRows="True" IsReadOnly="False" Margin="0,5,0,5" CanUserSortColumns="True" CanUserAddRows="True"  AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
 
                 <DataGrid.Columns>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding FlightNumber}" Header="Рейс" />
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding AirlineName}" Header="Афиакомпания" />
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding DepatureCity}" Header="Вылет"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding ArrivalCity}" Header="Направление"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding DepartureTime}" Header="Время вылета"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding ArrivalTime}" Header="Время прилета"/>
+                    <materialDesign:MaterialDataGridTextColumn MaxLength="10" Binding="{Binding FlightNumber,Mode=OneTime}" Header="Рейс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn MaxLength="50" Binding="{Binding AirlineName,Mode=OneTime}" Header="Авиакомпания" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn MaxLength="30" Binding="{Binding DepatureCity,Mode=OneTime}" Header="Вылет" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn MaxLength="30" Binding="{Binding ArrivalCity,Mode=OneTime}" Header="Направление" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding DepartureTime,Mode=OneTime}" Header="Время вылета" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding ArrivalTime,Mode=OneTime}" Header="Время прилета" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                 </DataGrid.Columns>
 
             </DataGrid>

@@ -8,7 +8,7 @@ using System.Data.Linq.Mapping;
 namespace OperatorOfAAirport
 {
     [Table]
-    class Aircraft
+    public class Aircraft
     {
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public short AircraftID { get; set; }

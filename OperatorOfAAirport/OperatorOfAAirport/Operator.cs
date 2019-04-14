@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace OperatorOfAAirport
 {
     [Table]
-    class Operator
+    public class Operator
     {
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public short OperatorID { get; set; }
