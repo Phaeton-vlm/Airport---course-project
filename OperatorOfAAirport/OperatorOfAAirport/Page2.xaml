@@ -37,25 +37,35 @@
 
         <!--/////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
         <Grid Grid.Row="1">
-            <DataGrid HorizontalContentAlignment="Center" x:Name="DataGridAircraft" SelectionMode="Single" IsReadOnly="False" Margin="0 5 0 5" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid x:Name="DataGridAircraft" SelectionMode="Single" IsReadOnly="True" Margin="0 5 0 5" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
 
                 <DataGrid.Columns>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding SideNumber,Mode=OneTime}" Header="Номер" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding AircraftModel,Mode=OneTime}" Header="Модель" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding EconomyClass,Mode=OneTime}" Header="Эконом класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding BusinessClass,Mode=OneTime}" Header="Бизнес класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding FirstClass,Mode=OneTime}" Header="Первый класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding VIPClass,Mode=OneTime}" Header="VIP класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding IsFree,Mode=OneTime}" Header="Доступен" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding SideNumber}"  Header="Номер" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding AircraftModel}" Header="Модель" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding EconomyClass}" Header="Эконом класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding BusinessClass}" Header="Бизнес класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding FirstClass}" Header="Первый класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding VIPClass}" Header="VIP класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding IsFree}" Header="Доступен" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                 </DataGrid.Columns>
                 
             </DataGrid>
         </Grid>
 
         <Grid Grid.Row="2">
-            <StackPanel Orientation="Horizontal" Margin="2" HorizontalAlignment="Right">
-                <Button Margin="0,0,10,0" Style="{StaticResource MaterialDesignFlatButton}">Удалить</Button>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="2" HorizontalAlignment="Right">
+                <Button Margin="0,0,10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}">Изменить</Button>
                 <Button Click="AddButtonClick" Margin="10,0,10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}"  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=AddAircraft}">Добавить</Button>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Margin="2" HorizontalAlignment="Left">
+                <Button Click="ButtonClick_DeleteAircraft" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFlatButton}">Удалить</Button>
             </StackPanel>
         </Grid>
 

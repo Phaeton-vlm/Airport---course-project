@@ -27,11 +27,6 @@ namespace OperatorOfAAirport
         {
             InitializeComponent();
 
-            
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
             MyDataContext dboperator = new MyDataContext(connectionString);
 
             var report = from fl in dboperator.flights
@@ -57,7 +52,16 @@ namespace OperatorOfAAirport
                              op.SecondName
                          };
 
-            DataGridAircraft.ItemsSource = report.ToList();
+            foreach (var item in report)
+            {
+                DataGridAircraft.Items.Add(item);
+            }
+           
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+           
         }
     }
 }

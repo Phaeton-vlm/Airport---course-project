@@ -31,23 +31,17 @@ namespace OperatorOfAAirport
             MyDataContext dboperator = new MyDataContext(connectionString);
 
             var flights = from fl in dboperator.flights
-                          join airc in dboperator.GetTable<Airline>() on fl.AirlineID equals airc.AirlineID
+                          join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
                           select new
                           { fl.ArrivalCity , fl.ArrivalTime, fl.DepartureTime, fl.DepatureCity, fl.FlightNumber, airc.AirlineName };
 
-            DataGridFlights.ItemsSource = flights.ToList();
-            //IEnumerable< flights = dboperator.ExecuteCommand("select * from Flight join Airline on Flight.AirlineID = Airline.AirlineID");
+            foreach (var item in flights)
+            {
+                DataGridFlights.Items.Add(item);
+            }
 
-            //var flights = dboperator.GetTable<Flight>().Join<Flight,Airline, >
-
-
-
-            //foreach (var item in flights)
-            //{
-            //    DataGridAircraft.Items.Add(item);
-            //    //DataGridAircraft.Items.
-            //    //DataGridAircraft.Items.Add(item.fl);
-            //}
+            _ComboBoxHours.ItemsSource = CurrentUser.LoadComboBoxHours();
+            _ComboBoxMinutes.ItemsSource = CurrentUser.LoadComboBoxMinutes();
         }
 
        

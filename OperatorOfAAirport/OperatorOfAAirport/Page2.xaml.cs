@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,9 +30,13 @@ namespace OperatorOfAAirport
 
             MyDataContext dboperator = new MyDataContext(connectionString);
             var aircrafts = from airc in dboperator.aircrafts
-                            select new { airc.AircraftModel, airc.BusinessClass, airc.EconomyClass, airc.FirstClass, airc.IsFree, airc.SideNumber, airc.VIPClass };
+                                //select new {airc.AircraftID, airc.AircraftModel, airc.BusinessClass, airc.EconomyClass, airc.FirstClass, airc.IsFree, airc.SideNumber, airc.VIPClass };
+                            select airc;
 
-            DataGridAircraft.ItemsSource = aircrafts.ToList();
+            foreach (var item in aircrafts)
+            {
+                DataGridAircraft.Items.Add(item);
+            }
         }
 
         private void ButtonClick_AddAircraft(object sender, RoutedEventArgs e)
@@ -46,10 +51,14 @@ namespace OperatorOfAAirport
                 dboperator.aircrafts.InsertOnSubmit(aircraftnew);
                 dboperator.SubmitChanges();
 
-                ChangeColor();
+                TextBlockMessgeAddAircraft = CurrentUser.ResetColor(TextBlockMessgeAddAircraft);
 
                 TextBlockMessgeAddAircraft.Text = "Самолет добавлен";
                 TextBlockMessgeAddAircraft.Visibility = Visibility.Visible;
+
+                ClearTextBoxes();
+
+                DataGridAircraft.Items.Add(aircraftnew);
             }
             catch (FormatException)
             {
@@ -57,22 +66,26 @@ namespace OperatorOfAAirport
                 TextBlockMessgeAddAircraft.Visibility = Visibility.Visible;
                 TextBlockMessgeAddAircraft.Text = "Заполнены не все поля";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 TextBlockMessgeAddAircraft.Foreground = Brushes.Red;
                 TextBlockMessgeAddAircraft.Visibility = Visibility.Visible;
-                TextBlockMessgeAddAircraft.Text = $"Бортовой номер {_TextBlockSideNumber.Text} уже существует";
+                TextBlockMessgeAddAircraft.Text = $"Бортовой номер {_TextBlockSideNumber.Text} уже существует";     
             }
         }
 
         private void _TextBlockEconomyClass_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!char.IsDigit(char.Parse(e.Text))) { e.Handled = true;  return; }
-            //if((sender as TextBox).Text.Length == 0 && int.Parse(e.Text) == 0) { e.Handled = true; return; }
         }
 
         private void AddButtonClick(object sender, RoutedEventArgs e)
-        {          
+        {
+            ClearTextBoxes();
+        }
+
+        private void ClearTextBoxes()
+        {
             _TextBlockSideNumber.Clear();
             _TextBlockModel.Clear();
             _TextBlockEconomyClass.Clear();
@@ -86,11 +99,33 @@ namespace OperatorOfAAirport
             TextBlockMessgeAddAircraft.Visibility = Visibility.Hidden;
         }
 
-        void ChangeColor()
+    /*    void ForCollapsed()
         {
-            var palette = new MaterialDesignThemes.Wpf.PaletteHelper().QueryPalette();
-            var hue = palette.PrimarySwatch.PrimaryHues.ToArray()[palette.PrimaryDarkHueIndex];
-            TextBlockMessgeAddAircraft.Foreground = new SolidColorBrush(hue.Color);
+            _TextBlockSideNumber.Visibility = Visibility.Equals(Visibility.Collapsed) ? Visibility.Visible: Visibility.Collapsed;
+            _TextBlockModel.Visibility = Visibility.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
+            _TextBlockEconomyClass.Visibility = Visibility.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
+            _TextBlockBusinessClass.Visibility = Visibility.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
+            _TextBlockFirstClass.Visibility = Visibility.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
+            _TextBlockVipClass.Visibility = Visibility.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
+        }*/
+
+        private void ButtonClick_DeleteAircraft(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MyDataContext dboperator = new MyDataContext(connectionString);
+                int index = DataGridAircraft.SelectedIndex;
+                IList delaircraft = DataGridAircraft.SelectedItems;
+
+                dboperator.ExecuteCommand("DELETE FROM Aircraft where AircraftID = {0}", (delaircraft[0] as Aircraft).AircraftID);
+                DataGridAircraft.Items.RemoveAt(index);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+      
+
         }
     }
 }
