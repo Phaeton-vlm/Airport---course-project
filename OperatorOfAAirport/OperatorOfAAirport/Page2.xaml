@@ -37,7 +37,7 @@
 
         <!--/////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
         <Grid Grid.Row="1">
-            <DataGrid x:Name="DataGridAircraft" SelectionMode="Single" IsReadOnly="True" Margin="0 5 0 5" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid x:Name="DataGridAircraft" SelectionMode="Single" IsReadOnly="True" Margin="0 5 0 5" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False" CanUserDeleteRows="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
 
                 <DataGrid.Columns>
 

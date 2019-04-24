@@ -54,6 +54,8 @@ namespace OperatorOfAAirport
 
                 TextBlockMessgeAddAirline = CurrentUser.ResetColor(TextBlockMessgeAddAirline);
 
+                ClearTextValues();
+
                 TextBlockMessgeAddAirline.Text = "Авиакомпания добавлена";
                 TextBlockMessgeAddAirline.Visibility = Visibility.Visible;
 
@@ -76,19 +78,29 @@ namespace OperatorOfAAirport
 
         private void ButtonClick_OpenAddAirline(object sender, RoutedEventArgs e)
         {
+           TextBlockMessgeAddAirline.Visibility = Visibility.Hidden;
+          //  Button__AddAirline.Visibility = Visibility.Visible;
+         ///   Button_ChangeAirline.Visibility = Visibility.Collapsed;
+            ClearTextValues();
+        }
+
+        void ClearTextValues()
+        {
             _TextBlockAirlineName.Clear();
             _TextBlockCounty.Clear();
         }
 
         private void Cuncel_ButtonClick(object sender, RoutedEventArgs e)
         {
-            TextBlockMessgeAddAirline.Visibility = Visibility.Hidden;
+           
         }
 
         private void ButtonClick_DeleteAirline(object sender, RoutedEventArgs e)
         {
             try
             {
+                ErrorTextBlock.Visibility = Visibility.Collapsed;
+
                 MyDataContext dboperator = new MyDataContext(connectionString);
                 int index = DataGridAirline.SelectedIndex;
                 IList delairline = DataGridAirline.SelectedItems;
@@ -98,8 +110,83 @@ namespace OperatorOfAAirport
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                ErrorTextBlock.Visibility = Visibility.Visible;
             }
         }
+
+        private void _TextBlockAirlineName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (TextBlockMessgeAddAirline.Visibility == Visibility.Visible)
+            {
+                TextBlockMessgeAddAirline.Visibility = Visibility.Hidden;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      /*  IList changeairline;
+        private void Button_OpenChange(object sender, RoutedEventArgs e)
+        {         
+                Button__AddAirline.Visibility = Visibility.Collapsed;
+                Button_ChangeAirline.Visibility = Visibility.Visible;
+
+                AddAirline.IsOpen = true;
+
+                int index = DataGridAirline.SelectedIndex;
+                changeairline = DataGridAirline.SelectedItems;
+
+                _TextBlockAirlineName.Text = (changeairline[0] as Airline).AirlineName;
+                _TextBlockCounty.Text = (changeairline[0] as Airline).Country;              
+            
+        }
+
+        private void ButtonClick_ChangeAirline(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_TextBlockAirlineName.Text.Length > 0 && _TextBlockCounty.Text.Length > 0)
+                {
+                    MyDataContext dboperator = new MyDataContext(connectionString);
+                    Airline changAirl =dboperator.airlines.Where(airl => airl.AirlineName == (changeairline[0] as Airline).AirlineName);
+
+                    (changAirl as Airline).AirlineName = _TextBlockAirlineName.Text;
+                    (changAirl as Airline).Country = _TextBlockCounty.Text;
+
+                    dboperator.SubmitChanges();
+
+                    ClearTextValues();
+
+                    TextBlockMessgeAddAirline.Text = "Изменения внесены";
+                    TextBlockMessgeAddAirline.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    TextBlockMessgeAddAirline.Foreground = Brushes.Red;
+                    TextBlockMessgeAddAirline.Visibility = Visibility.Visible;
+                    TextBlockMessgeAddAirline.Text = "Заполнены не все поля";
+                    return;
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                MessageBox.Show(ex.Message);
+                TextBlockMessgeAddAirline.Foreground = Brushes.Red;
+                TextBlockMessgeAddAirline.Visibility = Visibility.Visible;
+                TextBlockMessgeAddAirline.Text = $"Авиакомпания {_TextBlockAirlineName.Text} уже существует";
+            }
+
+        }*/
     }
 }

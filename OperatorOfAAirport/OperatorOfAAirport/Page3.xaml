@@ -19,10 +19,11 @@
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="6*"/>
             <RowDefinition Height="56"/>
         </Grid.RowDefinitions>
 
+       
         <materialDesign:ColorZone Grid.Row="0" Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="Bottom" >
 
             <StackPanel  Orientation="Horizontal" Height="55" Width="1010">
@@ -41,6 +42,8 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
+            <!--Click="Button_OpenChange"-->
+            
             <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="2" HorizontalAlignment="Right">
                 <Button Margin="0,0,10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}">Изменить</Button>
                 <Button Click="ButtonClick_OpenAddAirline" Margin="10,0,10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}"  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=AddAirline}">Добавить</Button>
@@ -48,6 +51,7 @@
 
             <StackPanel Orientation="Horizontal" Margin="2" HorizontalAlignment="Left">
                 <Button Click="ButtonClick_DeleteAirline" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFlatButton}">Удалить</Button>
+                <TextBlock Visibility="Collapsed" x:Name="ErrorTextBlock" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Row="0"  Width="auto" MaxWidth="505" MaxHeight="68" TextWrapping="Wrap" >Выделите строку для удаления</TextBlock>
             </StackPanel>
         </Grid>
 
@@ -66,19 +70,21 @@
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="200" >
                     <TextBlock Foreground="{DynamicResource PrimaryHueDarkBrush}" TextWrapping="Wrap" HorizontalAlignment="Left">Заполните данные</TextBlock>
 
-                    <TextBox x:Name="_TextBlockAirlineName" materialDesign:HintAssist.Hint="Название" MaxLength="10" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox x:Name="_TextBlockCounty" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Страна" MaxLength="40" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-  
+                    <TextBox x:Name="_TextBlockAirlineName" materialDesign:HintAssist.Hint="Название" MaxLength="10" Style="{StaticResource MaterialDesignFloatingHintTextBox}" KeyDown="_TextBlockAirlineName_KeyDown"/>
+                    <TextBox x:Name="_TextBlockCounty" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Страна" MaxLength="40" Style="{StaticResource MaterialDesignFloatingHintTextBox}" KeyDown="_TextBlockAirlineName_KeyDown"/>
+
                     <TextBlock x:Name="TextBlockMessgeAddAirline" Visibility="Hidden" Margin="0,15,0,5" Foreground="{DynamicResource PrimaryHueDarkBrush}" TextWrapping="Wrap" HorizontalAlignment="Left" MaxHeight="30">Авиакомпания добавлена</TextBlock>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Click="Cuncel_ButtonClick" Margin="0,5,0,0" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=AddAirline}" Style="{StaticResource MaterialDesignFlatButton}" Content="CANCEL"></Button>
-                        <Button Click="ButtonClick_AddAirline" Margin="0,5,0,0" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Content="OK"></Button>
+                        <Button Click="Cuncel_ButtonClick" Margin="0,5,0,0" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=AddAirline}" Style="{StaticResource MaterialDesignFlatButton}" Content="ОТМЕНА"></Button>
+                        <Button x:Name="Button__AddAirline" Click="ButtonClick_AddAirline" Margin="0,5,0,0" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Content="OK"></Button>
+                        <Button x:Name="Button_ChangeAirline" Visibility="Collapsed" Margin="0,5,0,0" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Content="ИЗМЕНИТЬ"></Button>
                     </StackPanel>
 
+                    <!-- Click="ButtonClick_ChangeAirline"-->
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
-
+        
     </Grid>
 </Page>
