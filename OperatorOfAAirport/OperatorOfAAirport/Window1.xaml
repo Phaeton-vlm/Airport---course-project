@@ -14,28 +14,28 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         Title="Window1" Height="600" Width="1080" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" MouseDown="Window_MouseDown">
-   
+
     <Window.Resources>
-        
+
         <Storyboard x:Key="OpenMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="70"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="250"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-        
-        <Storyboard x:Key="CloseMenu">
-             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
-                 <EasingDoubleKeyFrame KeyTime="0" Value="250"/>
-                 <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="70"/>
-             </DoubleAnimationUsingKeyFrames>
 
-         </Storyboard>
-        
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="250"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="70"/>
+            </DoubleAnimationUsingKeyFrames>
+
+        </Storyboard>
+
     </Window.Resources>
-    
+
     <Window.Triggers>
-        
+
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
             <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
         </EventTrigger>
@@ -43,54 +43,60 @@
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonCloseMenu">
             <BeginStoryboard Storyboard="{StaticResource CloseMenu}"/>
         </EventTrigger>
-        
+
     </Window.Triggers>
-    
-    
+
+
     <Grid>
-       
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="14*"/>
+            <ColumnDefinition Width="31*"/>
+        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition  Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
 
-        
-        
-        <materialDesign:ColorZone Mode="PrimaryDark" Padding=" 18">
+
+
+        <materialDesign:ColorZone Mode="PrimaryDark" Padding=" 18" Grid.ColumnSpan="2">
             <StackPanel >
                 <materialDesign:PopupBox HorizontalAlignment="Right" PlacementMode="BottomAndAlignRightEdges">
-                    <StackPanel Width="150">
+                    <StackPanel Width="180">
                         <Button FontSize="16" Style="{StaticResource MaterialDesignFlatButton}"  Content="Account"/>
-                        <Button FontSize="16" Style="{StaticResource MaterialDesignFlatButton}"  Content="Help"/>
+                        <Button Click="ButtonClick_help" FontSize="16" Style="{StaticResource MaterialDesignFlatButton}"  Content="Справка"/>
                         <Separator/>
-                        <Button FontSize="16" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowLogout}" Content="Logout" Style="{StaticResource MaterialDesignFlatButton}" />
-                        <Button FontSize="16" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowExit}" Content="Exit" Style="{StaticResource MaterialDesignFlatButton}"/>
+                        <Button FontSize="16" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowLogout}" Content="Выйти из системы" Style="{StaticResource MaterialDesignFlatButton}" />
+                        <Button FontSize="16" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowExit}" Content="Выход" Style="{StaticResource MaterialDesignFlatButton}"/>
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>
         </materialDesign:ColorZone>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxHeight="62">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxHeight="62" Grid.Row="0" Grid.ColumnSpan="2" >
             <materialDesign:PackIcon x:Name="ChangeIcon" VerticalAlignment="Center" Width="30" Height="30" Margin="10,0,10,0"/>
             <TextBlock x:Name="ChangeHeader" VerticalAlignment="Center" FontSize="30"></TextBlock>
         </StackPanel>
-<!--///////////////////////////////////////////////////////////////-->
+        <!--///////////////////////////////////////////////////////////////-->
 
-        <Frame x:Name="FrameCh"  Grid.Row="2"  NavigationUIVisibility="Hidden" Margin="70,0,0,0"></Frame>
+        <Frame x:Name="FrameCh"  Grid.Row="1"  NavigationUIVisibility="Hidden" Margin="70,0,0,0" Grid.ColumnSpan="2"></Frame>
 
-        <materialDesign:DialogHost IsOpen="False" x:Name="DialogWindowTubMenu" Grid.RowSpan="2">
+        <materialDesign:DialogHost IsOpen="False" x:Name="DialogWindowTubMenu" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <materialDesign:DialogHost.DialogContent>
                 <Grid></Grid>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
 
-        
-        <!--//////////////////////////////////Меню///////////////////////////////////////////////-->
-        <Grid   x:Name="GridMenu" Width="70" HorizontalAlignment="Left"  Grid.RowSpan="2" Background="{DynamicResource PrimaryHueLightBrush}">
-            
-                <StackPanel>
-                    <Grid Height="150"  RenderTransformOrigin="0.5,0.5">
+
+        <!--//////////////////////////////////Меню///////////////////////////////////////////////Background="{DynamicResource PrimaryHueLightBrush}"-->
+        <Grid x:Name="GridMenu" Width="70" HorizontalAlignment="Left"  Grid.RowSpan="2" Background="{DynamicResource MaterialDesignPaper}">
+
+
+            <StackPanel>
+                <StackPanel Height="150">
+                    <Grid  Height="62" Background="{DynamicResource PrimaryHueDarkBrush}"  RenderTransformOrigin="0.5,0.5">
                         <Grid.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -100,53 +106,54 @@
                             </TransformGroup>
                         </Grid.RenderTransform>
 
-                    <Button x:Name="ButtonOpenMenu" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowTubMenu}" Height="50" Width="50" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionDarkButton}"  BorderBrush="{x:Null}" Background="{x:Null}" Foreground="{DynamicResource PrimaryHueDarkBrush}" Click="ButtonOpenMenu_Click">
+                        <Button x:Name="ButtonOpenMenu" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowTubMenu}" Height="50" Width="50" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionDarkButton}"  BorderBrush="{x:Null}" Background="{x:Null}" Click="ButtonOpenMenu_Click">
                             <materialDesign:PackIcon Kind="Menu" Width="30" Height="30"/>
                         </Button>
-                    
-                    <Button x:Name="ButtonCloseMenu" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowTubMenu}" Visibility="Collapsed" Height="50" Width="50" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionDarkButton}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueDarkBrush}" Click="ButtonCloseMenu_Click">
-                        <materialDesign:PackIcon Kind="ArrowLeft" Width="30" Height="30"/>
+
+                        <Button x:Name="ButtonCloseMenu" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowTubMenu}" Visibility="Collapsed" Height="50" Width="50" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionDarkButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonCloseMenu_Click">
+                            <materialDesign:PackIcon Kind="ArrowLeft" Width="30" Height="30"/>
                         </Button>
 
-                    <Separator Margin="0,0,0,25"/>
-                </Grid>
-                <ListView  x:Name="ListViewMenu" Foreground="#FF5C99D6" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewMenu_SelectionChanged"  >
+                        <!--<Separator Margin="0,0,0,25"/>-->
+                    </Grid>
+                </StackPanel>
 
-                    <ListViewItem x:Name="ItemFlight" Height="60" Foreground="{DynamicResource PrimaryHueDarkBrush}">
-                            <StackPanel Orientation="Horizontal">
+                <ListView   x:Name="ListViewMenu"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewMenu_SelectionChanged"  >
+
+                    <ListViewItem x:Name="ItemFlight"  Height="60" Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                        <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Airport" Height="30" Width="30" Margin="10,0,10,0"/>
-                                <TextBlock Text="FLIGHTS" VerticalAlignment="Center" Margin="20 10"/>
-                            </StackPanel>
-                        </ListViewItem>
+                            <TextBlock Text="FLIGHTS" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
 
                     <ListViewItem x:Name="ItempAircraft" Height="60" Foreground="{DynamicResource PrimaryHueDarkBrush}">
-                            <StackPanel Orientation="Horizontal" >
+                        <StackPanel Orientation="Horizontal" >
                             <materialDesign:PackIcon Kind="Aeroplane" Height="30" Width="30" Margin="10,0,10,0" />
-                                <TextBlock Text="AIRCRAFTS" VerticalAlignment="Center" Margin="20 10"/>
-                            </StackPanel>
-                        </ListViewItem>
+                            <TextBlock Text="AIRCRAFTS" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
 
                     <ListViewItem Height="60" Foreground="{DynamicResource PrimaryHueDarkBrush}">
-                            <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="UserSupervisorCircle" Height="30" Width="30" Margin="10,0,10,0"/>
-                                <TextBlock Text="AIRLINES" VerticalAlignment="Center"  Margin="20 10"/>
-                            </StackPanel>
-                        </ListViewItem>
+                            <TextBlock Text="AIRLINES" VerticalAlignment="Center"  Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
 
                     <ListViewItem Height="60" Foreground="{DynamicResource PrimaryHueDarkBrush}">
-                            <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="FileDocument" Height="30" Width="30" Margin="10,0,10,0"/>
-                                <TextBlock Text="REPORT" VerticalAlignment="Center"  Margin="20 10"/>
-                            </StackPanel>
-                        </ListViewItem>
-                    
-                    </ListView>
-                </StackPanel>
-           
+                            <TextBlock Text="REPORT" VerticalAlignment="Center"  Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                </ListView>
+            </StackPanel>
         </Grid>
-        
+
         <!--////////////////////////Диалоговое окно выхода////////////////////////////////-->
-        <materialDesign:DialogHost IsOpen="False" x:Name="DialogWindowExit" Grid.RowSpan="2">
+        <materialDesign:DialogHost IsOpen="False" x:Name="DialogWindowExit" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
                     <TextBlock HorizontalAlignment="Center" >Are you sure?</TextBlock>
@@ -159,7 +166,7 @@
         </materialDesign:DialogHost>
 
         <!--////////////////////Диологовое окно выхода из аккаунта//////////////////////-->
-        <materialDesign:DialogHost IsOpen="False" x:Name="DialogWindowLogout" Grid.RowSpan="2">
+        <materialDesign:DialogHost IsOpen="False" x:Name="DialogWindowLogout" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
                     <TextBlock HorizontalAlignment="Center" >Are you sure?</TextBlock>
@@ -170,6 +177,6 @@
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
-        
+
     </Grid>
 </Window>

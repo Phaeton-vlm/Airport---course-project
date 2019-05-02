@@ -1,0 +1,66 @@
+﻿<Page x:Class="OperatorOfAAirport.HelpPage5"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:OperatorOfAAirport"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      mc:Ignorable="d" 
+      d:DesignHeight="532" d:DesignWidth="1010"
+      Title="HelpPage5">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <Expander HorizontalAlignment="Stretch" Header="Общие сведения о приложении">
+                <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
+                    <TextBlock Text="Your Content" />
+                    <TextBlock Opacity=".68"
+        Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        TextWrapping="Wrap" />
+                </StackPanel>
+            </Expander>
+            <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+            <Expander HorizontalAlignment="Stretch" Header="Добавление рейсов">
+                <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
+                    <TextBlock Text="Your Content" />
+                    <TextBlock Opacity=".68"
+        Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        TextWrapping="Wrap" />
+                </StackPanel>
+            </Expander>
+            <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+            <Expander HorizontalAlignment="Stretch" Header="Добавление самолетов">
+                <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
+                    <TextBlock Text="Your Content" />
+                    <TextBlock Opacity=".68" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." 
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Expander>
+            <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+            <Expander HorizontalAlignment="Stretch" Header="Добавление авиакомпаний" >
+                <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}"  Margin="24,8,24,16">
+                    <TextBlock Text="Your Content" />
+                    <TextBlock Opacity=".68" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." TextWrapping="Wrap" />
+                </StackPanel>
+            </Expander>
+            <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+            <Expander HorizontalAlignment="Stretch" Header="Просмотр отчета">
+                <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
+                    <TextBlock Text="Your Content" />
+                    <TextBlock Opacity=".68" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." 
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Expander>
+            <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

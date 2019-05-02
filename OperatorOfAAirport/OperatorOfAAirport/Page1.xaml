@@ -17,15 +17,35 @@
       Title="Page1">
 
     <Grid >
+
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition Height="56"/>
         </Grid.RowDefinitions>
 
-        <materialDesign:ColorZone Grid.Row="0" Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="Bottom" >
+        <materialDesign:ColorZone  Grid.Row="0" Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="Bottom" >
 
-            <StackPanel  Orientation="Horizontal" Height="55" Width="1010">
+            <StackPanel  Orientation="Horizontal" Height="55" Width="1010" >
+                <StackPanel VerticalAlignment="Center" materialDesign:RippleAssist.IsCentered="True" Orientation="Horizontal" Width="auto">
+
+                    <materialDesign:ColorZone CornerRadius="2" Margin="10,0,0,0" VerticalAlignment="Center" Mode="Light">
+                        <Grid  Height="30">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="240" />
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Height="18" Width="18" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"  Kind="Magnify" />
+
+                            <TextBox x:Name="SortBox" Grid.Column="1" Margin="0" materialDesign:HintAssist.Hint="Поиск" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0" MinWidth="200" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" />
+                        </Grid>
+                    </materialDesign:ColorZone>
+
+                    <Button Panel.ZIndex="0"  Height="30" Width="30" Style="{DynamicResource MaterialDesignToolForegroundButton}" Margin="5,0,0,0">
+                        <materialDesign:PackIcon Kind="Send" />
+                    </Button>
+                </StackPanel>
+
             </StackPanel>
         </materialDesign:ColorZone>
 
@@ -37,10 +57,12 @@
         <!--<Separator Grid.Row="1" VerticalAlignment="Top"/>-->
 
         <Grid Grid.Row="1">
-            <DataGrid x:Name="DataGridFlights" CanUserDeleteRows="False" IsReadOnly="True" Margin="0,5,0,5" CanUserSortColumns="True" CanUserAddRows="True"  AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid x:Name="DataGridFlights" SelectionMode="Single" CanUserDeleteRows="False" IsReadOnly="True" Margin="0,5,0,5" CanUserSortColumns="True" CanUserAddRows="True"  AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
 
                 <DataGrid.Columns>
                     <materialDesign:MaterialDataGridTextColumn MaxLength="10" Binding="{Binding FlightNumber}" Header="Рейс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn MaxLength="10" Binding="{Binding SideNumber}" Header="Номер самолета" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                    <materialDesign:MaterialDataGridTextColumn MaxLength="10" Binding="{Binding AircraftModel}" Header="модель самолета" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                     <materialDesign:MaterialDataGridTextColumn MaxLength="50" Binding="{Binding AirlineName}" Header="Авиакомпания" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                     <materialDesign:MaterialDataGridTextColumn MaxLength="30" Binding="{Binding DepatureCity}" Header="Вылет" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                     <materialDesign:MaterialDataGridTextColumn MaxLength="30" Binding="{Binding ArrivalCity}" Header="Направление" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
@@ -70,66 +92,80 @@
 
         <materialDesign:DialogHost  IsOpen="False" x:Name="AddFlight" Grid.RowSpan="3" >
             <materialDesign:DialogHost.DialogContent>
-                <Grid>
-                   
-                    <StackPanel x:Name="StackPanelMain"  Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="300" >
+                <materialDesign:ColorZone Mode="Dark">
 
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock Foreground="{DynamicResource PrimaryHueDarkBrush}" TextWrapping="Wrap" HorizontalAlignment="Left" Width="140" Margin="0,15,10,0">Заполните данные</TextBlock>
-                            <TextBox x:Name="_TextBoxFlightNumber" materialDesign:HintAssist.Hint="Номер рейса" MaxLength="10" Width="140" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        </StackPanel>
+                    <StackPanel Width="320" Margin="0,0,0,10">
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox x:Name="_TextBoxDepatureCity" Width="140" Margin="0,5,10,0" materialDesign:HintAssist.Hint="Город вылета" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  />
-                            <TextBox x:Name="_TextBoxArrivalCity" Width="140" Margin="10,5,0,0" materialDesign:HintAssist.Hint="Направление"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
-                            <DatePicker x:Name="DatePiker" materialDesign:HintAssist.Hint="Дата вылета" Margin="0,10,10,0" Width="140"></DatePicker>
-                            <materialDesign:TimePicker x:Name="TimePiker" Is24Hours="True" materialDesign:HintAssist.Hint="Время вылета" Margin="10,10,0,0" Width="140"></materialDesign:TimePicker>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Foreground="{DynamicResource PrimaryHueDarkBrush}" Width="140" Margin="0,15,10,0" TextWrapping="Wrap" HorizontalAlignment="Left">Время полета</TextBlock>
-
-                            <StackPanel Orientation="Vertical" Width="140" Margin="10,10,0,0">
-
-                                <Grid Width="auto">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-
-                                    <ComboBox x:Name="_ComboBoxHours" IsEditable="True" materialDesign:HintAssist.Hint="HH" Grid.Column="0" Margin="0,0,5,0" ></ComboBox>
-                                    <ComboBox x:Name="_ComboBoxMinutes" IsEditable="True" materialDesign:HintAssist.Hint="MM" Grid.Column="1" Margin="5,0,5,0"></ComboBox>
-                                </Grid>
+                        <materialDesign:ColorZone Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="Bottom" >
+                            <StackPanel>
+                                <Button Background="{x:Null}" BorderThickness="0" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=AddFlight}" Margin="5" >
+                                    <materialDesign:PackIcon Foreground="{DynamicResource PrimaryHueMidBrush}" VerticalAlignment="Center" Kind="Close" Width="30" Height="30"/>
+                                </Button>
                             </StackPanel>
-                        </StackPanel>
+                        </materialDesign:ColorZone>
 
-                        <StackPanel Orientation="Horizontal">
-                            <ComboBox x:Name="_ComboBoxSideNumber" IsEditable="True" materialDesign:HintAssist.Hint="Номер самолета" Grid.Column="1" Width="140"  Margin="0,10,10,0"></ComboBox>
-                            <ComboBox x:Name="_ComboBoxAirlineName" IsEditable="True" materialDesign:HintAssist.Hint="Название Авиакомпании" Grid.Column="1" Width="140" Margin="10,10,0,0"></ComboBox>
-                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center" Margin="0,5,0,0">
 
-                        <StackPanel Orientation="Horizontal"  Visibility="Collapsed">
-                            <ComboBox x:Name="_ComboBoxSideNumberINV"  Grid.Column="1"  Margin="0,10,0,0"></ComboBox>
-                            <ComboBox x:Name="_ComboBoxAirlineNameINV" Grid.Column="1" Margin="0,10,0,0" ></ComboBox>
-                        </StackPanel>
-                        
-                        <TextBlock x:Name="TextBlockMessgeAddFlight"  Margin="0,15,0,5" Foreground="{DynamicResource PrimaryHueDarkBrush}" TextWrapping="Wrap" HorizontalAlignment="Left" MaxHeight="30">Рейс добавлен</TextBlock>
+                            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Margin="0">
+                                <TextBox x:Name="_TextBoxFlightNumber" Width="300" materialDesign:HintAssist.Hint="Номер рейса" MaxLength="10"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button Margin="0,5,0,0" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=AddFlight}" Style="{StaticResource MaterialDesignFlatButton}" Content="ОТМЕНА"></Button>
-                            <Button Click="ButtonClick_OK" Margin="0,5,0,0" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Content="OK"></Button>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0,10,0">
+                                <TextBox x:Name="_TextBoxDepatureCity" Width="140" MaxLength="30" Margin="0,5,10,0" materialDesign:HintAssist.Hint="Город вылета" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  />
+                                <TextBox x:Name="_TextBoxArrivalCity" Width="140" MaxLength="30" Margin="10,5,0,0" materialDesign:HintAssist.Hint="Направление"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0,10,0">
+                                <DatePicker x:Name="DatePiker" materialDesign:HintAssist.Hint="Дата вылета" Margin="0,10,10,0" Width="140"></DatePicker>
+                                <materialDesign:TimePicker x:Name="TimePiker" Is24Hours="True" materialDesign:HintAssist.Hint="Время вылета" Margin="10,10,0,0" Width="140"></materialDesign:TimePicker>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0,10,0">
+                                <TextBlock Foreground="{DynamicResource PrimaryHueDarkBrush}" Width="140" Margin="0,10,10,0" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center">Время полета</TextBlock>
+
+                                <StackPanel Width="140" Margin="10,10,0,0">
+
+                                    <Grid Width="auto">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <ComboBox x:Name="_ComboBoxHours" IsEditable="True" materialDesign:HintAssist.Hint="HH" Grid.Column="0" Margin="0,0,10,0" ></ComboBox>
+                                        <ComboBox x:Name="_ComboBoxMinutes" IsEditable="True" materialDesign:HintAssist.Hint="MM" Grid.Column="1" Margin="10,0,0,0"></ComboBox>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0,10,0">
+                                <ComboBox x:Name="_ComboBoxSideNumber" IsEditable="True" materialDesign:HintAssist.Hint="Самолет" Grid.Column="1" Width="140"  Margin="0,10,10,0"></ComboBox>
+                                <ComboBox x:Name="_ComboBoxAirlineName" IsEditable="True" materialDesign:HintAssist.Hint="Авиакомпания" Grid.Column="1" Width="140" Margin="10,10,0,0"></ComboBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0,10,0" Visibility="Collapsed">
+                                <ComboBox x:Name="_ComboBoxSideNumberINV"  Grid.Column="1"  Margin="0,10,0,0"></ComboBox>
+                                <ComboBox x:Name="_ComboBoxAirlineNameINV" Grid.Column="1" Margin="0,10,0,0" ></ComboBox>
+                            </StackPanel>
+
+                            <TextBlock x:Name="TextBlockMessgeAddFlight" Visibility="Hidden"  Margin="10,15,0,5" Foreground="{DynamicResource PrimaryHueDarkBrush}" TextWrapping="Wrap" HorizontalAlignment="Left" MaxHeight="30">Рейс добавлен</TextBlock>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Background="{x:Null}" BorderThickness="0" Click="ButtonClick_OK" Margin="0,5,10,0" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Width="2">
+                                    <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}">ДОБАВИТЬ</TextBlock>
+                                </Button>
+                            </StackPanel>
+
                         </StackPanel>
 
                     </StackPanel>
 
-                  
-                </Grid>
+                </materialDesign:ColorZone>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
 
 
+        <Border Grid.RowSpan="3" Background="{DynamicResource PrimaryHueDarkBrush}" Height="auto" HorizontalAlignment="Left" SnapsToDevicePixels="True" Width="2" ></Border>
+
     </Grid>
+
 </Page>

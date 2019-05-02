@@ -30,35 +30,51 @@ namespace OperatorOfAAirport
             InitializeComponent();
 
             MyDataContext dboperator = new MyDataContext(connectionString);
+            
 
-            var flights = from fl in dboperator.flights
-                          join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
-                          select new
-                          {
-                              fl.ArrivalCity,
-                              fl.ArrivalTime,
-                              fl.DepartureTime,
-                              fl.DepatureCity,
-                              fl.FlightNumber,
-                              airc.AirlineName,
-                              fl.FlightID,
-                          };
+                var flights = from fl in dboperator.flights
+                              join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
+                              join air in dboperator.aircrafts on fl.AircraftID equals air.AircraftID
+                              select new
+                              {
+                                  fl.ArrivalCity,
+                                  fl.ArrivalTime,
+                                  fl.DepartureTime,
+                                  fl.DepatureCity,
+                                  fl.FlightNumber,
+                                  airc.AirlineName,
+                                  fl.FlightID,
+                                  air.AircraftModel,
+                                  air.SideNumber
+                              };
 
-            foreach (var item in flights)
-            {
-                DataGridFlights.Items.Add(item);
-            }
+                foreach (var item in flights)
+                {
+                    DataGridFlights.Items.Add(item);
+                }
+
+                
+            
 
             _ComboBoxHours = CurrentUser.LoadComboBoxHours(_ComboBoxHours);
             _ComboBoxMinutes = CurrentUser.LoadComboBoxMinutes(_ComboBoxMinutes);
             CurrentUser.LoadComboBoxSideNumberandAirline(ref _ComboBoxAirlineName, ref _ComboBoxAirlineNameINV, ref _ComboBoxSideNumber, ref _ComboBoxSideNumberINV);
-
-                     
         }
 
         private void ButtonClick_AddFlight(object sender, RoutedEventArgs e)
         {
+            TextBlockMessgeAddFlight.Visibility = Visibility.Hidden;
+            ClearValue();
             CurrentUser.LoadComboBoxSideNumberandAirline(ref _ComboBoxAirlineName, ref _ComboBoxAirlineNameINV, ref _ComboBoxSideNumber, ref _ComboBoxSideNumberINV);
+        }
+
+        private void ClearValue()
+        {
+            _TextBoxFlightNumber.Clear();
+            _TextBoxDepatureCity.Clear();
+            _TextBoxArrivalCity.Clear();
+            DatePiker.Text = "";
+            TimePiker.Text="";
         }
 
         private void ButtonClick_OK(object sender, RoutedEventArgs e)
@@ -93,32 +109,46 @@ namespace OperatorOfAAirport
 
                 dbFlight.flights.InsertOnSubmit(newflight);
                 dbFlight.SubmitChanges();
-
-                TextBlockMessgeAddFlight = CurrentUser.ResetColor(TextBlockMessgeAddFlight);
               
                 TextBlockMessgeAddFlight.Text = "Рейс добавлен";
                 TextBlockMessgeAddFlight.Visibility = Visibility.Visible;
+              
+               var flights = from fl in dbFlight.flights
+                             join airc in dbFlight.airlines on fl.AirlineID equals airc.AirlineID
+                             join air in dbFlight.aircrafts on fl.AircraftID equals air.AircraftID
+                             where fl.FlightNumber == _TextBoxFlightNumber.Text
+                             select new
+                             {
+                                 fl.ArrivalCity,
+                                 fl.ArrivalTime,
+                                 fl.DepartureTime,
+                                 fl.DepatureCity,
+                                 fl.FlightNumber,
+                                 airc.AirlineName,
+                                 fl.FlightID,
+                                 air.AircraftModel,
+                                 air.SideNumber
+                             };
+
+                foreach (var item in flights)
+                {
+                    DataGridFlights.Items.Add(item);
+                }
 
 
-                var flights = from fl in dbFlight.flights
-                              join airc in dbFlight.airlines on fl.AirlineID equals airc.AirlineID
-                              where fl.FlightNumber == _TextBoxFlightNumber.Text
-                              select new
-                              { fl.ArrivalCity, fl.ArrivalTime, fl.DepartureTime, fl.DepatureCity, fl.FlightNumber, airc.AirlineName,fl.FlightID };
+                Aircraft Aircr = dbFlight.aircrafts.Where(airc => airc.AircraftID == short.Parse(_ComboBoxSideNumberINV.Items[_ComboBoxSideNumber.SelectedIndex].ToString())).FirstOrDefault();
+                Aircr.IsFree = false;
 
-       
-                DataGridFlights.Items.Add(flights);
-                             
+                dbFlight.SubmitChanges();
+
             }
             catch (System.Data.SqlClient.SqlException)
             {
-                TextBlockMessgeAddFlight.Foreground = Brushes.Red;
                 TextBlockMessgeAddFlight.Visibility = Visibility.Visible;
                 TextBlockMessgeAddFlight.Text = $"Рейс с номером {_TextBoxFlightNumber.Text} уже существует";
             }
             catch (Exception)
             {
-                TextBlockMessgeAddFlight.Foreground = Brushes.Red;
                 TextBlockMessgeAddFlight.Visibility = Visibility.Visible;
                 TextBlockMessgeAddFlight.Text = "Заполнены не все поля";
 
@@ -130,18 +160,207 @@ namespace OperatorOfAAirport
             try
             {
                 MyDataContext dboperator = new MyDataContext(connectionString);
-                int index = DataGridFlights.SelectedIndex;
-              
-                dynamic std = DataGridFlights.SelectedItems;
-                short ind = std[0].FlightID;
+                
+                    int index = DataGridFlights.SelectedIndex;
 
-                dboperator.ExecuteCommand("DELETE FROM Flight where FlightID = {0}", ind);
-                DataGridFlights.Items.RemoveAt(index);
+                    dynamic std = DataGridFlights.SelectedItems;
+                    short ind = std[0].FlightID;
+                    string ind2 = std[0].SideNumber;
+
+                    dboperator.ExecuteCommand("DELETE FROM Flight where FlightID = {0}", ind);
+                    DataGridFlights.Items.RemoveAt(index);
+
+                    Aircraft Aircr = dboperator.aircrafts.Where(airc => airc.SideNumber == ind2).FirstOrDefault();
+                    Aircr.IsFree = true;
+
+                    dboperator.SubmitChanges();
+                
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void ButtonClick_Cancel(object sender, RoutedEventArgs e)
+        {
+            TextBlockMessgeAddFlight.Visibility = Visibility.Hidden;
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            QueryFlightNumber();
+        }
+
+        void QueryFlightNumber()
+        {
+            DataGridFlights.Items.Clear();
+            MyDataContext dboperator = new MyDataContext(connectionString);
+
+            var flights = from fl in dboperator.flights
+                          join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
+                          join air in dboperator.aircrafts on fl.AircraftID equals air.AircraftID
+                          where fl.FlightNumber.Contains(SortBox.Text) || air.SideNumber.Contains(SortBox.Text) || air.AircraftModel.Contains(SortBox.Text) || airc.AirlineName.Contains(SortBox.Text) || fl.DepatureCity.Contains(SortBox.Text)|| fl.ArrivalCity.Contains(SortBox.Text)
+                          select new
+                          {
+                              fl.ArrivalCity,
+                              fl.ArrivalTime,
+                              fl.DepartureTime,
+                              fl.DepatureCity,
+                              fl.FlightNumber,
+                              airc.AirlineName,
+                              fl.FlightID,
+                              air.AircraftModel,
+                              air.SideNumber
+                          };
+
+            foreach (var item in flights)
+            {
+                DataGridFlights.Items.Add(item);
+            }
+        }
+
+      /*  void QuerySideNumber()
+        {
+
+            DataGridFlights.Items.Clear();
+            MyDataContext dboperator = new MyDataContext(connectionString);
+
+            var flights = from fl in dboperator.flights
+                          join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
+                          join air in dboperator.aircrafts on fl.AircraftID equals air.AircraftID
+                          where air.SideNumber.Contains(SortBox.Text)
+                          select new
+                          {
+                              fl.ArrivalCity,
+                              fl.ArrivalTime,
+                              fl.DepartureTime,
+                              fl.DepatureCity,
+                              fl.FlightNumber,
+                              airc.AirlineName,
+                              fl.FlightID,
+                              air.AircraftModel,
+                              air.SideNumber
+                          };
+
+            foreach (var item in flights)
+            {
+                DataGridFlights.Items.Add(item);
+            }
+        }
+
+        void QueryAircraftModel()
+        {
+            DataGridFlights.Items.Clear();
+            MyDataContext dboperator = new MyDataContext(connectionString);
+
+            var flights = from fl in dboperator.flights
+                          join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
+                          join air in dboperator.aircrafts on fl.AircraftID equals air.AircraftID
+                          where air.AircraftModel.Contains(SortBox.Text)
+                          select new
+                          {
+                              fl.ArrivalCity,
+                              fl.ArrivalTime,
+                              fl.DepartureTime,
+                              fl.DepatureCity,
+                              fl.FlightNumber,
+                              airc.AirlineName,
+                              fl.FlightID,
+                              air.AircraftModel,
+                              air.SideNumber
+                          };
+
+            foreach (var item in flights)
+            {
+                DataGridFlights.Items.Add(item);
+            }
+        }
+
+        void QueryAirlineName()
+        {
+            DataGridFlights.Items.Clear();
+            MyDataContext dboperator = new MyDataContext(connectionString);
+
+            var flights = from fl in dboperator.flights
+                          join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
+                          join air in dboperator.aircrafts on fl.AircraftID equals air.AircraftID
+                          where airc.AirlineName.Contains(SortBox.Text)
+                          select new
+                          {
+                              fl.ArrivalCity,
+                              fl.ArrivalTime,
+                              fl.DepartureTime,
+                              fl.DepatureCity,
+                              fl.FlightNumber,
+                              airc.AirlineName,
+                              fl.FlightID,
+                              air.AircraftModel,
+                              air.SideNumber
+                          };
+
+            foreach (var item in flights)
+            {
+                DataGridFlights.Items.Add(item);
+            }
+        }
+
+        void QueryDepatureCity()
+        {       
+            DataGridFlights.Items.Clear();
+            MyDataContext dboperator = new MyDataContext(connectionString);
+
+            var flights = from fl in dboperator.flights
+                          join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
+                          join air in dboperator.aircrafts on fl.AircraftID equals air.AircraftID
+                          where fl.DepatureCity.Contains(SortBox.Text)
+                          select new
+                          {
+                              fl.ArrivalCity,
+                              fl.ArrivalTime,
+                              fl.DepartureTime,
+                              fl.DepatureCity,
+                              fl.FlightNumber,
+                              airc.AirlineName,
+                              fl.FlightID,
+                              air.AircraftModel,
+                              air.SideNumber
+                          };
+
+            foreach (var item in flights)
+            {
+                DataGridFlights.Items.Add(item);
+            }
+        }
+
+        void QueryArrivalCity()
+        {
+            DataGridFlights.Items.Clear();
+            MyDataContext dboperator = new MyDataContext(connectionString);
+
+            var flights = from fl in dboperator.flights
+                          join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
+                          join air in dboperator.aircrafts on fl.AircraftID equals air.AircraftID
+                          where fl.ArrivalCity.Contains(SortBox.Text)
+                          select new
+                          {
+                              fl.ArrivalCity,
+                              fl.ArrivalTime,
+                              fl.DepartureTime,
+                              fl.DepatureCity,
+                              fl.FlightNumber,
+                              airc.AirlineName,
+                              fl.FlightID,
+                              air.AircraftModel,
+                              air.SideNumber
+                          };
+
+            foreach (var item in flights)
+            {
+                DataGridFlights.Items.Add(item);
+            }
+        }
+       */
     }
 }

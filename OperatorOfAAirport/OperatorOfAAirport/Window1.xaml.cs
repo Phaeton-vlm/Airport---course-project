@@ -23,6 +23,7 @@ namespace OperatorOfAAirport
         Page2 page2 = new Page2();
         Page3 page3 = new Page3();
         Page4 page4 = new Page4();
+        HelpPage5 helpPage5 = new HelpPage5();
 
         public Window1()
         {
@@ -90,6 +91,11 @@ namespace OperatorOfAAirport
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
            // DragMove();
+        }
+
+        private void ButtonClick_help(object sender, RoutedEventArgs e)
+        {
+            FrameCh.Navigate(helpPage5);
         }
     }
 }

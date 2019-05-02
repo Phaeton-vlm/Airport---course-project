@@ -116,10 +116,9 @@ namespace OperatorOfAAirport
                 else
                 {
                     TextBlockChangedPass.Text = "Неверный пароль";
-                    TextBlockChangedPass.Foreground = Brushes.Red;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //TextBlockMessage.Text = $"Ошибка: {ex.Message}, Источник: {ex.Source}";
                 RepitPassword.IsOpen = false;

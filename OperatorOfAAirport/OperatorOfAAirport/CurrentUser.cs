@@ -55,7 +55,7 @@ namespace OperatorOfAAirport
             MyDataContext db = new MyDataContext(connectionString);
 
             var aircrafts = from airc in db.aircrafts
-                       select new { airc.AircraftID, airc.AircraftModel };
+                       select new { airc.AircraftID, airc.AircraftModel,airc.IsFree };
 
             var airlines = from airln in db.airlines
                            select new { airln.AirlineID, airln.AirlineName };
@@ -69,8 +69,11 @@ namespace OperatorOfAAirport
 
             foreach (var item in aircrafts)
             {
-                Aircr.Items.Add(item.AircraftModel);
-                AircrINV.Items.Add(item.AircraftID);
+                if (item.IsFree)
+                {
+                    Aircr.Items.Add(item.AircraftModel);
+                    AircrINV.Items.Add(item.AircraftID);
+                }
             }
 
             return null;

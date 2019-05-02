@@ -14,7 +14,7 @@
       FontFamily="{DynamicResource MaterialDesignFont}"
       mc:Ignorable="d" 
       d:DesignHeight="532" d:DesignWidth="1010"
-      Title="Page2">
+      Title="Page2" Loaded="Page_Loaded">
 
     <Grid >
         <Grid.RowDefinitions>
@@ -37,7 +37,7 @@
 
         <!--/////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
         <Grid Grid.Row="1">
-            <DataGrid x:Name="DataGridAircraft" SelectionMode="Single" IsReadOnly="True" Margin="0 5 0 5" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False" CanUserDeleteRows="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid x:Name="DataGridAircraft" SelectionMode="Single" IsReadOnly="True" Margin="0 5 0 5" CanUserSortColumns="True" CanUserAddRows="True" AutoGenerateColumns="False" CanUserDeleteRows="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" SelectionChanged="DataGridAircraft_SelectionChanged">
 
                 <DataGrid.Columns>
 
@@ -60,37 +60,60 @@
             </Grid.ColumnDefinitions>
             
             <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="2" HorizontalAlignment="Right">
-                <Button Margin="0,0,10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}">Изменить</Button>
+                <!--<Button Margin="0,0,10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}">Изменить</Button>-->
                 <Button Click="AddButtonClick" Margin="10,0,10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}"  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=AddAircraft}">Добавить</Button>
             </StackPanel>
             
             <StackPanel Orientation="Horizontal" Margin="2" HorizontalAlignment="Left">
                 <Button Click="ButtonClick_DeleteAircraft" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFlatButton}">Удалить</Button>
+                <TextBlock Visibility="Collapsed" x:Name="ErrorTextBlock" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Row="0"  Width="auto" MaxWidth="505" MaxHeight="68" TextWrapping="Wrap" >Выделите строку для удаления</TextBlock>
             </StackPanel>
         </Grid>
 
         <materialDesign:DialogHost  IsOpen="False" x:Name="AddAircraft" Grid.RowSpan="3" >
             <materialDesign:DialogHost.DialogContent>
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="200" >
-                    <TextBlock Foreground="{DynamicResource PrimaryHueDarkBrush}" TextWrapping="Wrap" HorizontalAlignment="Left">Заполните данные</TextBlock>
-                    
-                    <TextBox x:Name="_TextBlockSideNumber" materialDesign:HintAssist.Hint="Бортовой номер" MaxLength="10" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox x:Name="_TextBlockModel" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Модель" MaxLength="40" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox x:Name="_TextBlockEconomyClass" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Эконом класс" MaxLength="4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="_TextBlockEconomyClass_PreviewTextInput" />
-                    <TextBox x:Name="_TextBlockBusinessClass" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Бизнес класс" MaxLength="4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="_TextBlockEconomyClass_PreviewTextInput"/>
-                    <TextBox x:Name="_TextBlockFirstClass" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Первый класс" MaxLength="4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="_TextBlockEconomyClass_PreviewTextInput" />
-                    <TextBox x:Name="_TextBlockVipClass" Margin="0,5,0,0" materialDesign:HintAssist.Hint="VIP класс" MaxLength="4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" PreviewTextInput="_TextBlockEconomyClass_PreviewTextInput" />
+                <materialDesign:ColorZone Mode="Dark" >
 
-                    <TextBlock x:Name="TextBlockMessgeAddAircraft" Visibility="Hidden" Margin="0,15,0,5" Foreground="{DynamicResource PrimaryHueDarkBrush}" TextWrapping="Wrap" HorizontalAlignment="Left" MaxHeight="30">Самолет добавлен</TextBlock>
-                    
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Click="Cuncel_ButtonClick" Margin="0,5,0,0" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=AddAircraft}" Style="{StaticResource MaterialDesignFlatButton}" Content="CANCEL"></Button>
-                        <Button Click="ButtonClick_AddAircraft" Margin="0,5,0,0" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Content="OK"></Button>
+                    <StackPanel Orientation="Vertical">
+                        <materialDesign:ColorZone Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="Bottom" >
+                            <StackPanel>
+                                <Button Background="{x:Null}" BorderThickness="0" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=AddAircraft}" Margin="5" >
+                                    <materialDesign:PackIcon Foreground="{DynamicResource PrimaryHueMidBrush}" VerticalAlignment="Center" Kind="Close" Width="30" Height="30"/>
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:ColorZone>
+
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,5,20,20" Width="200" >
+
+                            <TextBox x:Name="_TextBlockSideNumber" materialDesign:HintAssist.Hint="Бортовой номер" MaxLength="10" Style="{StaticResource MaterialDesignFloatingHintTextBox}" KeyDown="_TextBlockSideNumber_KeyDown" />
+                            <TextBox x:Name="_TextBlockModel" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Модель" MaxLength="40" Style="{StaticResource MaterialDesignFloatingHintTextBox}" KeyDown="_TextBlockSideNumber_KeyDown"/>
+                            <TextBox x:Name="_TextBlockEconomyClass" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Эконом класс" MaxLength="4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" KeyDown="_TextBlockSideNumber_KeyDown" PreviewTextInput="_TextBlockEconomyClass_PreviewTextInput" />
+                            <TextBox x:Name="_TextBlockBusinessClass" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Бизнес класс" MaxLength="4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" KeyDown="_TextBlockSideNumber_KeyDown" PreviewTextInput="_TextBlockEconomyClass_PreviewTextInput"/>
+                            <TextBox x:Name="_TextBlockFirstClass" Margin="0,5,0,0" materialDesign:HintAssist.Hint="Первый класс" MaxLength="4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" KeyDown="_TextBlockSideNumber_KeyDown" PreviewTextInput="_TextBlockEconomyClass_PreviewTextInput" />
+                            <TextBox x:Name="_TextBlockVipClass" Margin="0,5,0,0" materialDesign:HintAssist.Hint="VIP класс" MaxLength="4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" KeyDown="_TextBlockSideNumber_KeyDown" PreviewTextInput="_TextBlockEconomyClass_PreviewTextInput" />
+
+                            <TextBlock x:Name="TextBlockMessgeAddAircraft" Visibility="Hidden" Margin="0,15,0,5" Foreground="{DynamicResource PrimaryHueMidBrush}" TextWrapping="Wrap" HorizontalAlignment="Left" MaxHeight="30">Самолет добавлен</TextBlock>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button  Background="{x:Null}" BorderThickness="0" Click="ButtonClick_AddAircraft" Margin="0,5,0,0" HorizontalAlignment="Right" >
+                                    <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}">ОК</TextBlock>
+                                </Button>
+                            </StackPanel>
+
+                        </StackPanel>
                     </StackPanel>
-                   
-                </StackPanel>
+                </materialDesign:ColorZone>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
+
+        <StackPanel Grid.Row="0" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,20,0">
+                <RadioButton x:Name="All" Width="auto" Style="{StaticResource MaterialDesignTabRadioButton}" IsChecked="True" Content="ВСЕ" Checked="RadioButton_Checked" />
+                <RadioButton x:Name="Free" Width="140" Style="{StaticResource MaterialDesignTabRadioButton}" IsChecked="False" Content="СВОБОДНЫЕ" Checked="RadioButton_Checked"/>
+                <RadioButton x:Name="Off" Width="140" Style="{StaticResource MaterialDesignTabRadioButton}" IsChecked="False" Content="НЕДОСТУПНЫЕ" Checked="RadioButton_Checked"/>
+            </StackPanel>
+        </StackPanel>
+        <Border Grid.RowSpan="3" Background="{DynamicResource PrimaryHueDarkBrush}" Height="auto" HorizontalAlignment="Left" SnapsToDevicePixels="True" Width="2" ></Border>
 
     </Grid>
 </Page>

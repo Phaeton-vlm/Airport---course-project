@@ -59,5 +59,7 @@
 
             </DataGrid>
         </Grid>
+        <Border Grid.RowSpan="3" Background="{DynamicResource PrimaryHueDarkBrush}" Height="auto" HorizontalAlignment="Left" SnapsToDevicePixels="True" Width="2" ></Border>
+
     </Grid>
 </Page>

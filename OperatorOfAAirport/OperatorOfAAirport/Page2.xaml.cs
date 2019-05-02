@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Data.Linq;
@@ -27,50 +27,51 @@ namespace OperatorOfAAirport
         public Page2()
         {
             InitializeComponent();
-
-            MyDataContext dboperator = new MyDataContext(connectionString);
-            var aircrafts = from airc in dboperator.aircrafts
-                                //select new {airc.AircraftID, airc.AircraftModel, airc.BusinessClass, airc.EconomyClass, airc.FirstClass, airc.IsFree, airc.SideNumber, airc.VIPClass };
-                            select airc;
-
-            foreach (var item in aircrafts)
-            {
-                DataGridAircraft.Items.Add(item);
-            }
         }
 
         private void ButtonClick_AddAircraft(object sender, RoutedEventArgs e)
-        {         
-            try
+        {
+            if (_TextBlockBusinessClass.Text.Length < 1 || _TextBlockEconomyClass.Text.Length < 1 || _TextBlockFirstClass.Text.Length < 1 || _TextBlockModel.Text.Length < 1 || _TextBlockSideNumber.Text.Length < 1 || _TextBlockVipClass.Text.Length < 1)
             {
-                MyDataContext dboperator = new MyDataContext(connectionString);
-
-                Aircraft aircraftnew = new Aircraft { AircraftModel = _TextBlockModel.Text, SideNumber = _TextBlockSideNumber.Text, EconomyClass = short.Parse(_TextBlockEconomyClass.Text),
-                    BusinessClass = short.Parse(_TextBlockBusinessClass.Text), FirstClass = short.Parse(_TextBlockFirstClass.Text), VIPClass = short.Parse(_TextBlockVipClass.Text), IsFree = true };
-
-                dboperator.aircrafts.InsertOnSubmit(aircraftnew);
-                dboperator.SubmitChanges();
-
-                TextBlockMessgeAddAircraft = CurrentUser.ResetColor(TextBlockMessgeAddAircraft);
-
-                TextBlockMessgeAddAircraft.Text = "Самолет добавлен";
-                TextBlockMessgeAddAircraft.Visibility = Visibility.Visible;
-
-                ClearTextBoxes();
-
-                DataGridAircraft.Items.Add(aircraftnew);
-            }
-            catch (FormatException)
-            {
-                TextBlockMessgeAddAircraft.Foreground = Brushes.Red;
                 TextBlockMessgeAddAircraft.Visibility = Visibility.Visible;
                 TextBlockMessgeAddAircraft.Text = "Заполнены не все поля";
             }
-            catch (Exception ex)
+            else
             {
-                TextBlockMessgeAddAircraft.Foreground = Brushes.Red;
-                TextBlockMessgeAddAircraft.Visibility = Visibility.Visible;
-                TextBlockMessgeAddAircraft.Text = $"Бортовой номер {_TextBlockSideNumber.Text} уже существует";     
+                try
+                {
+                    MyDataContext dboperator = new MyDataContext(connectionString);
+
+                    Aircraft aircraftnew = new Aircraft
+                    {
+                        AircraftModel = _TextBlockModel.Text,
+                        SideNumber = _TextBlockSideNumber.Text,
+                        EconomyClass = short.Parse(_TextBlockEconomyClass.Text),
+                        BusinessClass = short.Parse(_TextBlockBusinessClass.Text),
+                        FirstClass = short.Parse(_TextBlockFirstClass.Text),
+                        VIPClass = short.Parse(_TextBlockVipClass.Text),
+                        IsFree = true
+                    };
+
+                    dboperator.aircrafts.InsertOnSubmit(aircraftnew);
+                    dboperator.SubmitChanges();
+
+                    TextBlockMessgeAddAircraft.Text = "Самолет добавлен";
+                    TextBlockMessgeAddAircraft.Visibility = Visibility.Visible;
+
+                    ClearTextBoxes();
+
+                    DataGridAircraft.Items.Add(aircraftnew);
+
+                    if (All.IsChecked == true) { Sort(true, 1); return; }
+                    if (Free.IsChecked == true) { Sort(true, 0); return; }
+                    if (Off.IsChecked == true) { Sort(false, 0); return; }
+                }
+                catch (Exception)
+                {
+                    TextBlockMessgeAddAircraft.Visibility = Visibility.Visible;
+                    TextBlockMessgeAddAircraft.Text = $"Номер {_TextBlockSideNumber.Text} занят";
+                }
             }
         }
 
@@ -81,6 +82,7 @@ namespace OperatorOfAAirport
 
         private void AddButtonClick(object sender, RoutedEventArgs e)
         {
+            TextBlockMessgeAddAircraft.Visibility = Visibility.Hidden;
             ClearTextBoxes();
         }
 
@@ -94,37 +96,107 @@ namespace OperatorOfAAirport
             _TextBlockVipClass.Clear();
         }
 
-        private void Cuncel_ButtonClick(object sender, RoutedEventArgs e)
-        {
-            TextBlockMessgeAddAircraft.Visibility = Visibility.Hidden;
-        }
-
-    /*    void ForCollapsed()
-        {
-            _TextBlockSideNumber.Visibility = Visibility.Equals(Visibility.Collapsed) ? Visibility.Visible: Visibility.Collapsed;
-            _TextBlockModel.Visibility = Visibility.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
-            _TextBlockEconomyClass.Visibility = Visibility.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
-            _TextBlockBusinessClass.Visibility = Visibility.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
-            _TextBlockFirstClass.Visibility = Visibility.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
-            _TextBlockVipClass.Visibility = Visibility.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
-        }*/
-
         private void ButtonClick_DeleteAircraft(object sender, RoutedEventArgs e)
         {
             try
             {
+                ErrorTextBlock.Visibility = Visibility.Collapsed;
+
                 MyDataContext dboperator = new MyDataContext(connectionString);
                 int index = DataGridAircraft.SelectedIndex;
                 IList delaircraft = DataGridAircraft.SelectedItems;
 
-                dboperator.ExecuteCommand("DELETE FROM Aircraft where AircraftID = {0}", (delaircraft[0] as Aircraft).AircraftID);
-                DataGridAircraft.Items.RemoveAt(index);
+                if(!(delaircraft[0] as Aircraft).IsFree)
+                {
+                    ErrorTextBlock.Text = "Операция запрещена пока самолет находится в расписании";
+                    ErrorTextBlock.Visibility = Visibility.Visible;                   
+                }
+                else
+                {
+                    dboperator.ExecuteCommand("DELETE FROM Aircraft where AircraftID = {0}", (delaircraft[0] as Aircraft).AircraftID);
+                    DataGridAircraft.Items.RemoveAt(index);
+                }
+           
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                MessageBox.Show(ex.Message);
+                ErrorTextBlock.Text = "Выделите строку для удаления";
+                ErrorTextBlock.Visibility = Visibility.Visible;
             }
-      
+
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            ErrorTextBlock.Visibility = Visibility.Collapsed;
+
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+            {
+               if(All.IsChecked == true) { Sort(true, 1); return; }
+               if(Free.IsChecked == true) { Sort(true, 0); return; }
+               if(Off.IsChecked == true) { Sort(false, 0); return; }
+            });
+        }
+
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {           
+            switch ((sender as RadioButton).Name)
+            {
+                case "All":
+                    Sort(true,1);
+                    break;
+                case "Free":
+                    Sort(true, 0);
+                    break;
+                case "Off":
+                    Sort(false, 0);
+                    break;
+            }
+        }
+
+        public void Sort(bool par, byte addpar)
+        {
+            DataGridAircraft.Items.Clear();
+            MyDataContext dboperator = new MyDataContext(connectionString);
+
+            var aircrafts = from airc in dboperator.aircrafts
+                            select airc;
+            if (addpar == 1)
+            {
+                foreach (var item in aircrafts)
+                {
+                    DataGridAircraft.Items.Add(item);
+                }
+                return;
+            }
+            else
+            {
+                foreach (var item in aircrafts)
+                {
+                    if (item.IsFree == par)
+                    {
+                        DataGridAircraft.Items.Add(item);
+                    }
+                }
+                return;
+            }
+        }
+
+        private void _TextBlockSideNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (TextBlockMessgeAddAircraft.Visibility == Visibility.Visible)
+            {
+                TextBlockMessgeAddAircraft.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void DataGridAircraft_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(ErrorTextBlock.Visibility == Visibility.Visible)
+            {
+                ErrorTextBlock.Visibility = Visibility.Collapsed;
+            }
 
         }
     }
