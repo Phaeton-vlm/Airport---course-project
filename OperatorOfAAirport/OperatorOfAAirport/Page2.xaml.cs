@@ -24,10 +24,15 @@ namespace OperatorOfAAirport
     {
         string connectionString = "Data Source=DESKTOP-989RPMD;Initial Catalog=AirportDB;Integrated Security=True";
 
+        
         public Page2()
         {
             InitializeComponent();
+           
+
         }
+
+       
 
         private void ButtonClick_AddAircraft(object sender, RoutedEventArgs e)
         {
@@ -162,6 +167,7 @@ namespace OperatorOfAAirport
 
             var aircrafts = from airc in dboperator.aircrafts
                             select airc;
+
             if (addpar == 1)
             {
                 foreach (var item in aircrafts)

@@ -1,8 +1,9 @@
-﻿<Page x:Class="OperatorOfAAirport.Page4"
+﻿<Page x:Name="e" x:Class="OperatorOfAAirport.Page4"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
       xmlns:local="clr-namespace:OperatorOfAAirport"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -19,40 +20,35 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="6*"></RowDefinition>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="56"/>
         </Grid.RowDefinitions>
+
 
         <materialDesign:ColorZone Grid.Row="0" Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="Bottom" >
 
-            <StackPanel  Orientation="Horizontal" Height="76" Width="1010">
+            <StackPanel  Orientation="Horizontal" Height="55" Width="1010">
             </StackPanel>
         </materialDesign:ColorZone>
 
         <materialDesign:ColorZone Grid.Row="2" Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="Top" >
 
-            <StackPanel  Orientation="Horizontal" Height="35" Width="1010">
+            <StackPanel  Orientation="Horizontal" Height="56" Width="1010">
             </StackPanel>
         </materialDesign:ColorZone>
-        <!--<Separator Grid.Row="1" VerticalAlignment="Top"/>-->
 
         <Grid Grid.Row="1">
-            <DataGrid  x:Name="DataGridAircraft" IsReadOnly="True" Margin="0,5,0,5" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid  x:Name="DataGridAll" IsReadOnly="True" Margin="0,5,0,5" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="10 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
 
                 <DataGrid.Columns>
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding FlightNumber}" Header="Рейс" />
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding AirlineName}" Header="Авиакомпания" />
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding Country}" Header="Страна" />
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding DepatureCity}" Header="Вылет"/>
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding ArrivalCity}" Header="Направление"/>
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding DepartureTime}" Header="Время вылета"/>
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding ArrivalTime}" Header="Время прилета"/>
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding AircraftModel}" Header="Самолет"/>
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding SideNumber}" Header="Номер" />
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding EconomyClass}" Header="Эконом класс"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding BusinessClass}" Header="Бизнес класс"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding FirstClass}" Header="Первый класс"/>
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding VIPClass}" Header="VIP класс"/>
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding FirstName}" Header="Имя оператора"/>
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding SecondName}" Header="Фамилия оператора"/>
                 </DataGrid.Columns>
@@ -61,5 +57,24 @@
         </Grid>
         <Border Grid.RowSpan="3" Background="{DynamicResource PrimaryHueDarkBrush}" Height="auto" HorizontalAlignment="Left" SnapsToDevicePixels="True" Width="2" ></Border>
 
+        <StackPanel Grid.Row="2" Width="auto" VerticalAlignment="Center">
+            <Button x:Name="ButtonSaveReport"  Click="Button_Click" Width="150">Сохранить отчет</Button>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Stretch">
+            <ToggleButton x:Name="ButtonCheked" Margin="20,0,5,10" Style="{StaticResource MaterialDesignSwitchDarkToggleButton}" ToolTip="MaterialDesignSwitchDarkToggleButton" IsChecked="False" Checked="ButtonCheked_Checked" Unchecked="ButtonCheked_Unchecked" />
+            <TextBlock Margin="5,0,0,10" VerticalAlignment="Center">Текущий оператор/Все операторы</TextBlock>
+        </StackPanel>
+
+        <materialDesign:DialogHost IsOpen="False" x:Name="DialogWindowAwait" Grid.RowSpan="3" >
+            <materialDesign:DialogHost.DialogContent>
+                <materialDesign:ColorZone Mode="Dark" >
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Margin="10">
+                        <TextBlock Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center">Идет формирование отчета...</TextBlock>
+                        <ProgressBar IsIndeterminate="True" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
     </Grid>
 </Page>
