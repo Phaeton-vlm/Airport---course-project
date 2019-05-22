@@ -71,11 +71,12 @@
                         <Button FontSize="16" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowExit}" Content="Выход" Style="{StaticResource MaterialDesignFlatButton}"/>
                     </StackPanel>
                 </materialDesign:PopupBox>-->
-                <Button  Click="ButtonClick_help" Style="{StaticResource MaterialDesignFlatButton}">
-                    <materialDesign:PackIcon Foreground="White" Kind="Help" />
-                </Button>
+                <TextBlock x:Name="TextboxFI" Width="auto" Margin="0,0,10,0" VerticalAlignment="Center" FontSize="20"></TextBlock>
                 <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowLogout}" Style="{StaticResource MaterialDesignFlatButton}">
                     <materialDesign:PackIcon Foreground="White" Kind="AccountArrowLeftOutline" />
+                </Button>
+                <Button  Click="ButtonClick_help" Style="{StaticResource MaterialDesignFlatButton}">
+                    <materialDesign:PackIcon Foreground="White" Kind="Help" />
                 </Button>
                 <Button Style="{StaticResource MaterialDesignFlatButton}" Click="Button_Click">
                     <materialDesign:PackIcon Foreground="White" Kind="WindowMinimize" />
@@ -83,12 +84,12 @@
                 <Button Margin="0,0,20,0" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowExit}" Style="{StaticResource MaterialDesignFlatButton}">
                     <materialDesign:PackIcon Foreground="White" Kind="Close" />
                 </Button>
-                    
-                
+
+
             </StackPanel>
         </materialDesign:ColorZone>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxHeight="62" Grid.Row="0" Grid.ColumnSpan="2" >
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" MaxHeight="62" Grid.Row="0" Grid.ColumnSpan="2" Margin="60,0,0,0">
             <materialDesign:PackIcon x:Name="ChangeIcon" VerticalAlignment="Center" Width="30" Height="30" Margin="10,0,10,0"/>
             <TextBlock x:Name="ChangeHeader" VerticalAlignment="Center" FontSize="30"></TextBlock>
         </StackPanel>

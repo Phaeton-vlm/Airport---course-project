@@ -51,6 +51,9 @@ namespace OperatorOfAAirport
             else
             {
                 CurrentUser.CurrentID = entry.Single().OperatorID;
+                CurrentUser.FirstName = entry.Single().FirstName;
+                CurrentUser.SecondName = entry.Single().SecondName;
+
                 Window1 window1 = new Window1();
                 window1.Show();
                 this.Close();

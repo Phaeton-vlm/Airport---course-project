@@ -11,6 +11,8 @@ namespace OperatorOfAAirport
     static class CurrentUser
     {
         public static short CurrentID { get; set; }
+        public static string FirstName { get; set; }
+        public static string SecondName { get; set; }
         static string connectionString = "Data Source=DESKTOP-989RPMD;Initial Catalog=AirportDB;Integrated Security=True";
 
 

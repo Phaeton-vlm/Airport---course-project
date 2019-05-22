@@ -38,8 +38,11 @@
             <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
             <Expander HorizontalAlignment="Stretch" Header="Добавление самолетов">
                 <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
-                    <TextBlock Text="Your Content" />
-                    <TextBlock Opacity=".68" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." 
+                    <TextBlock Text="Добавление" />
+                    <TextBlock Opacity=".68" Text="Для добавления нового рейса нужно нажать на кнопку ''Добавить'' в нижнем правом углу. Откроется диалоговое окно где потребуется заполнить следующие поля:" TextWrapping="Wrap" />
+                    
+                    <TextBlock Text="Удаление" />
+                    <TextBlock Opacity=".68" Text="" 
                                TextWrapping="Wrap" />
                 </StackPanel>
             </Expander>

@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.Linq;
 using Word = Microsoft.Office.Interop.Word;
+using Excel = Microsoft.Office.Interop.Excel;
 using MaterialDesignThemes.Wpf;
 
 namespace OperatorOfAAirport
@@ -41,7 +42,7 @@ namespace OperatorOfAAirport
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
-            Word.Application word = new Word.Application(); 
+            /*Word.Application word = new Word.Application(); 
             Word.Document doc = word.Documents.Add(Visible: true);
             Word.Range range = doc.Range();
 
@@ -121,9 +122,44 @@ namespace OperatorOfAAirport
             {
                 word.Quit(SaveChanges: null);
                 return;
+            }*/
+
+            Excel.Application application = new Excel.Application();
+            application.Application.Workbooks.Add(Type.Missing);
+
+            for (int i = 1; i < DataGridAll.Columns.Count+ 1; i++)
+            {
+                application.Cells[1, i] = DataGridAll.Columns[i - 1].Header.ToString();
+                application.Cells[1, i].Font.Bold = true;
             }
 
+            //application.Rows[1].Style
+
+            for (int i = 0; i < DataGridAll.Items.Count ; i++)
+            {
+                int j = 0;
+                dynamic items = DataGridAll.Items[i];
+
+                application.Cells[i + 2, 1] = items.FlightNumber.ToString();
+                application.Cells[i + 2, 2] = items.AirlineName.ToString();
+                application.Cells[i + 2, 3] = items.DepatureCity.ToString();
+                application.Cells[i + 2, 4] = items.ArrivalCity.ToString();
+                application.Cells[i + 2, 5] = items.DepartureTime.ToString();
+                application.Cells[i + 2, 6] = items.ArrivalTime.ToString();
+                application.Cells[i + 2, 7] = items.AircraftModel.ToString();
+                application.Cells[i + 2, 8] = items.SideNumber.ToString();
+                application.Cells[i + 2, 9] = items.FirstName.ToString();
+                application.Cells[i + 2, 10] = items.SecondName.ToString();
+
+                application.Rows[i+1].Style.VerticalAlignment = Excel.XlVAlign.xlVAlignTop;
+
+            }
+
+            application.Columns.AutoFit();
+           
+            application.Visible = true;
             
+
 
         }
 

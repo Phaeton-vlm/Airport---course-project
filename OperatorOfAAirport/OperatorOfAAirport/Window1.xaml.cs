@@ -31,17 +31,21 @@ namespace OperatorOfAAirport
             FrameCh.Navigate(page1);
             ChangeIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Airport;
             ChangeHeader.Text = "РАСПИСАНИЕ";
+
+            TextboxFI.Text = $"{CurrentUser.SecondName} {CurrentUser.FirstName}";
         }
 
 
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
         {
+            ChangeHeader.Visibility = Visibility.Hidden;
             ButtonCloseMenu.Visibility = Visibility.Visible;
             ButtonOpenMenu.Visibility = Visibility.Collapsed;
         }
 
         private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
         {
+            ChangeHeader.Visibility = Visibility.Visible;
             ButtonCloseMenu.Visibility = Visibility.Collapsed;
             ButtonOpenMenu.Visibility = Visibility.Visible;
         }
@@ -96,6 +100,8 @@ namespace OperatorOfAAirport
         private void ButtonClick_help(object sender, RoutedEventArgs e)
         {
             FrameCh.Navigate(helpPage5);
+            ChangeIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.HelpOutline;
+            ChangeHeader.Text = "СПРАВКА";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
