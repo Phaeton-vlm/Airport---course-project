@@ -1,6 +1,8 @@
-﻿namespace OperatorOfAAirport {
-    
-    
-    public partial class AirportDBDataSet {
+﻿namespace OperatorOfAAirport
+{
+
+
+    public partial class AirportDBDataSet
+    {
     }
 }

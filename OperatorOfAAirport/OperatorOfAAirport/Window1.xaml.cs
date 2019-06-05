@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace OperatorOfAAirport
 {
@@ -35,7 +25,7 @@ namespace OperatorOfAAirport
             TextboxFI.Text = $"{CurrentUser.SecondName} {CurrentUser.FirstName}";
         }
 
-
+        //Открыть меню
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
         {
             ChangeHeader.Visibility = Visibility.Hidden;
@@ -43,6 +33,7 @@ namespace OperatorOfAAirport
             ButtonOpenMenu.Visibility = Visibility.Collapsed;
         }
 
+        //Закрыть меню
         private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
         {
             ChangeHeader.Visibility = Visibility.Visible;
@@ -50,6 +41,7 @@ namespace OperatorOfAAirport
             ButtonOpenMenu.Visibility = Visibility.Visible;
         }
 
+        //Переход по меню
         private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index = ListViewMenu.SelectedIndex;
@@ -80,11 +72,13 @@ namespace OperatorOfAAirport
 
         }
 
+        //Закрыть программу
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        //Закрыть программу и открыть окно авторизации
         private void Button_ClickLogout(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
@@ -97,6 +91,7 @@ namespace OperatorOfAAirport
            // DragMove();
         }
 
+        //Открыть справку
         private void ButtonClick_help(object sender, RoutedEventArgs e)
         {
             FrameCh.Navigate(helpPage5);
@@ -104,6 +99,7 @@ namespace OperatorOfAAirport
             ChangeHeader.Text = "СПРАВКА";
         }
 
+        //Свернуть окно
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;

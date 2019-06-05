@@ -50,7 +50,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="2" HorizontalAlignment="Left">
-                <Button Click="ButtonClick_DeleteAirline" Margin="10,0,0,0" Style="{StaticResource MaterialDesignFlatButton}">Удалить</Button>
+                <Button Margin="10,0,0,0" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=Message}">Удалить</Button>
                 <TextBlock Visibility="Collapsed" x:Name="ErrorTextBlock" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Row="0"  Width="auto" MaxWidth="505" MaxHeight="68" TextWrapping="Wrap" >Выделите строку для удаления</TextBlock>
             </StackPanel>
         </Grid>
@@ -98,6 +98,31 @@
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
         <Border Grid.RowSpan="3" Background="{DynamicResource PrimaryHueDarkBrush}" Height="auto" HorizontalAlignment="Left" SnapsToDevicePixels="True" Width="2" ></Border>
+
+        <materialDesign:DialogHost IsOpen="False" x:Name="Message" Grid.RowSpan="3" >
+            <materialDesign:DialogHost.DialogContent>
+                <materialDesign:ColorZone Mode="Dark" >
+                    <StackPanel Orientation="Vertical" >
+                        <materialDesign:ColorZone Mode="Dark" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="Bottom" >
+                            <StackPanel>
+                                <Button Background="{x:Null}" BorderThickness="0" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=Message}" Margin="5">
+                                    <materialDesign:PackIcon Foreground="{DynamicResource PrimaryHueMidBrush}" VerticalAlignment="Center" Kind="Close" Width="30" Height="30"/>
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:ColorZone>
+
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,5,20,20" Width="200" >
+                            <TextBlock Margin="0,20,0,10" Foreground="{DynamicResource PrimaryHueMidBrush}" TextWrapping="Wrap">После удаления будут также удалены рейсы, которые обслуживает данная авиакомпания. При следующем запуске приложения рейсы данной авикомпании исчезнут, сохраните отчет чтобы не потерять данные.Удалить запись?</TextBlock>
+                            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Button Click="ButtonClick_DeleteAirline" Background="{x:Null}" BorderThickness="0"   Margin="0,5,0,0" HorizontalAlignment="Right" >
+                                    <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}" >УДАЛИТЬ</TextBlock>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
 
     </Grid>
 </Page>

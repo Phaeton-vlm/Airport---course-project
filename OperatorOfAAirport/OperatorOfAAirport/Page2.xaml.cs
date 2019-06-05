@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Data.Linq;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace OperatorOfAAirport
 {
@@ -22,7 +12,6 @@ namespace OperatorOfAAirport
     /// </summary>
     public partial class Page2 : Page
     {
-        string connectionString = "Data Source=DESKTOP-989RPMD;Initial Catalog=AirportDB;Integrated Security=True";
 
         
         public Page2()
@@ -45,7 +34,7 @@ namespace OperatorOfAAirport
             {
                 try
                 {
-                    MyDataContext dboperator = new MyDataContext(connectionString);
+                    MyDataContext dboperator = new MyDataContext(CurrentUser.connectionString);
 
                     Aircraft aircraftnew = new Aircraft
                     {
@@ -107,7 +96,7 @@ namespace OperatorOfAAirport
             {
                 ErrorTextBlock.Visibility = Visibility.Collapsed;
 
-                MyDataContext dboperator = new MyDataContext(connectionString);
+                MyDataContext dboperator = new MyDataContext(CurrentUser.connectionString);
                 int index = DataGridAircraft.SelectedIndex;
                 IList delaircraft = DataGridAircraft.SelectedItems;
 
@@ -135,12 +124,10 @@ namespace OperatorOfAAirport
         {
             ErrorTextBlock.Visibility = Visibility.Collapsed;
 
-            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
-            {
-               if(All.IsChecked == true) { Sort(true, 1); return; }
-               if(Free.IsChecked == true) { Sort(true, 0); return; }
-               if(Off.IsChecked == true) { Sort(false, 0); return; }
-            });
+            if(All.IsChecked == true) { Sort(true, 1); return; }
+            if(Free.IsChecked == true) { Sort(true, 0); return; }
+            if(Off.IsChecked == true) { Sort(false, 0); return; }
+            
         }
 
 
@@ -162,31 +149,34 @@ namespace OperatorOfAAirport
 
         public void Sort(bool par, byte addpar)
         {
-            DataGridAircraft.Items.Clear();
-            MyDataContext dboperator = new MyDataContext(connectionString);
+           
+                DataGridAircraft.Items.Clear();
+                MyDataContext dboperator = new MyDataContext(CurrentUser.connectionString);
 
-            var aircrafts = from airc in dboperator.aircrafts
-                            select airc;
+            
+                var aircrafts = from airc in dboperator.aircrafts
+                                select airc;
 
-            if (addpar == 1)
-            {
-                foreach (var item in aircrafts)
+                if (addpar == 1)
                 {
-                    DataGridAircraft.Items.Add(item);
-                }
-                return;
-            }
-            else
-            {
-                foreach (var item in aircrafts)
-                {
-                    if (item.IsFree == par)
+                    foreach (var item in aircrafts)
                     {
                         DataGridAircraft.Items.Add(item);
                     }
+                    return;
                 }
-                return;
-            }
+                else
+                {
+                    foreach (var item in aircrafts)
+                    {
+                        if (item.IsFree == par)
+                        {
+                            DataGridAircraft.Items.Add(item);
+                        }
+                    }
+                    return;
+                }
+            
         }
 
         private void _TextBlockSideNumber_KeyDown(object sender, KeyEventArgs e)

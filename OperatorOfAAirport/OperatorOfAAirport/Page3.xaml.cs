@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Data.Linq;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace OperatorOfAAirport
 {
@@ -22,13 +11,11 @@ namespace OperatorOfAAirport
     /// </summary>
     public partial class Page3 : Page
     {
-        string connectionString = "Data Source=DESKTOP-989RPMD;Initial Catalog=AirportDB;Integrated Security=True";
-
         public Page3()
         {
             InitializeComponent();
 
-            MyDataContext dboperator = new MyDataContext(connectionString);
+            MyDataContext dboperator = new MyDataContext(CurrentUser.connectionString);
             var airlines = dboperator.airlines;
 
             foreach (var item in airlines)
@@ -43,7 +30,7 @@ namespace OperatorOfAAirport
             {
                 try
                 {
-                    MyDataContext dboperator = new MyDataContext(connectionString);
+                    MyDataContext dboperator = new MyDataContext(CurrentUser.connectionString);
 
                     Airline airlinenew = new Airline
                     {
@@ -96,7 +83,7 @@ namespace OperatorOfAAirport
             {
                 ErrorTextBlock.Visibility = Visibility.Collapsed;
 
-                MyDataContext dboperator = new MyDataContext(connectionString);
+                MyDataContext dboperator = new MyDataContext(CurrentUser.connectionString);
                 int index = DataGridAirline.SelectedIndex;
                 IList delairline = DataGridAirline.SelectedItems;
 
@@ -107,6 +94,8 @@ namespace OperatorOfAAirport
             {
                 ErrorTextBlock.Visibility = Visibility.Visible;
             }
+
+            Message.IsOpen = false;
         }
 
         private void _TextBlockAirlineName_KeyDown(object sender, KeyEventArgs e)
@@ -125,73 +114,5 @@ namespace OperatorOfAAirport
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*  IList changeairline;
-          private void Button_OpenChange(object sender, RoutedEventArgs e)
-          {         
-                  Button__AddAirline.Visibility = Visibility.Collapsed;
-                  Button_ChangeAirline.Visibility = Visibility.Visible;
-
-                  AddAirline.IsOpen = true;
-
-                  int index = DataGridAirline.SelectedIndex;
-                  changeairline = DataGridAirline.SelectedItems;
-
-                  _TextBlockAirlineName.Text = (changeairline[0] as Airline).AirlineName;
-                  _TextBlockCounty.Text = (changeairline[0] as Airline).Country;              
-
-          }
-
-          private void ButtonClick_ChangeAirline(object sender, RoutedEventArgs e)
-          {
-              try
-              {
-                  if (_TextBlockAirlineName.Text.Length > 0 && _TextBlockCounty.Text.Length > 0)
-                  {
-                      MyDataContext dboperator = new MyDataContext(connectionString);
-                      Airline changAirl =dboperator.airlines.Where(airl => airl.AirlineName == (changeairline[0] as Airline).AirlineName);
-
-                      (changAirl as Airline).AirlineName = _TextBlockAirlineName.Text;
-                      (changAirl as Airline).Country = _TextBlockCounty.Text;
-
-                      dboperator.SubmitChanges();
-
-                      ClearTextValues();
-
-                      TextBlockMessgeAddAirline.Text = "Изменения внесены";
-                      TextBlockMessgeAddAirline.Visibility = Visibility.Visible;
-                  }
-                  else
-                  {
-                      TextBlockMessgeAddAirline.Foreground = Brushes.Red;
-                      TextBlockMessgeAddAirline.Visibility = Visibility.Visible;
-                      TextBlockMessgeAddAirline.Text = "Заполнены не все поля";
-                      return;
-                  }
-              }
-              catch (ArgumentNullException ex)
-              {
-                  MessageBox.Show(ex.Message);
-                  TextBlockMessgeAddAirline.Foreground = Brushes.Red;
-                  TextBlockMessgeAddAirline.Visibility = Visibility.Visible;
-                  TextBlockMessgeAddAirline.Text = $"Авиакомпания {_TextBlockAirlineName.Text} уже существует";
-              }
-
-          }*/
     }
 }

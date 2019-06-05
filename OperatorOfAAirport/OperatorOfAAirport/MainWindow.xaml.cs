@@ -1,65 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Data.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
 namespace OperatorOfAAirport
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
-        string connectionString = "Data Source=DESKTOP-989RPMD;Initial Catalog=AirportDB;Integrated Security=True";
-
         public MainWindow()
         {
             InitializeComponent();
 
-           
-
+          
         }
 
+        //Закрытие программы
         private void Click_ExitButton(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        //Авторизация в программе
         private void Button_Click_Login(object sender, RoutedEventArgs e)
         {
+            MyDataContext dboperator = new MyDataContext(CurrentUser.connectionString);
 
-            MyDataContext dboperator = new MyDataContext(connectionString);
-           // var entry = dboperator.GetTable<Operator>().Where(op => op.Login == LoginTextBox.Text).Where(op => op.Password == PasswordBox.Password);
-
-            //foreach (var item in entry)
-            //{
-
-            //}
-
-            var entry = dboperator.ExecuteQuery<Operator>("SELECT * FROM Operator WHERE OperatorLogin COLLATE Latin1_General_CS_AS = {0} AND OperatorPassword COLLATE Latin1_General_CS_AS = {1}", LoginTextBox.Text,PasswordBox.Password).ToList();
-          
-
-            if (entry.Count() == 0)
+            try
             {
-                TextBlockMessage.Text = "Неверный логин или пароль, повторите попытку";
-                WrongPassOrLogin.IsOpen = true;
+                var entry = dboperator.ExecuteQuery<Operator>("SELECT * FROM Operator WHERE OperatorLogin COLLATE Latin1_General_CS_AS = {0} AND OperatorPassword COLLATE Latin1_General_CS_AS = {1}", LoginTextBox.Text, PasswordBox.Password).ToList();
+
+                if (entry.Count() == 0)
+                {
+                    TextBlockMessage.Text = "Неверный логин или пароль, повторите попытку";
+                    WrongPassOrLogin.IsOpen = true;
+                }
+                else
+                {
+                    CurrentUser.CurrentID = entry.Single().OperatorID;
+                    CurrentUser.FirstName = entry.Single().FirstName;
+                    CurrentUser.SecondName = entry.Single().SecondName;
+
+                    Window1 window1 = new Window1();
+                    window1.Show();
+                    this.Close();
+                }
             }
-            else
+            catch(Exception ex)
             {
-                CurrentUser.CurrentID = entry.Single().OperatorID;
-                CurrentUser.FirstName = entry.Single().FirstName;
-                CurrentUser.SecondName = entry.Single().SecondName;
-
-                Window1 window1 = new Window1();
-                window1.Show();
-                this.Close();
+                TextBlockMessage.Text = "Не удалось подключится к базе данных";
+                WrongPassOrLogin.IsOpen = true;
+                return;
             }
         }
 
+        //Регистрация
         private void ButtonRegestry(object sender, RoutedEventArgs e)
         {
            
@@ -97,7 +92,7 @@ namespace OperatorOfAAirport
         {
             try
             {
-                MyDataContext dboperator = new MyDataContext(connectionString);
+                MyDataContext dboperator = new MyDataContext(CurrentUser.connectionString);
 
                 if (_RepitPasswordBox.Password == _TextBoxPasswordReg.Password)
                 {
@@ -123,7 +118,6 @@ namespace OperatorOfAAirport
             }
             catch (Exception)
             {
-                //TextBlockMessage.Text = $"Ошибка: {ex.Message}, Источник: {ex.Source}";
                 RepitPassword.IsOpen = false;
                 TextBlockMessage.Text = "Пользователь с таким логином уже зарегестрирован";
                 WrongPassOrLogin.IsOpen = true;
@@ -132,7 +126,13 @@ namespace OperatorOfAAirport
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            _ConnectionStringTextBox.Text = CurrentUser.connectionString;
+        }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            CurrentUser.ChangeConStr(_ConnectionStringTextBox.Text);
+            ConnectionStringDialogHost.IsOpen = false;
         }
     }
 }

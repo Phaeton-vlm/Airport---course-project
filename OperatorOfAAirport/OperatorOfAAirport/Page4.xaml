@@ -51,6 +51,7 @@
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding SideNumber}" Header="Номер" />
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding FirstName}" Header="Имя оператора"/>
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding SecondName}" Header="Фамилия оператора"/>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding Login}" Header="Логин"/>
                 </DataGrid.Columns>
 
             </DataGrid>
@@ -62,8 +63,18 @@
         </StackPanel>
         
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Stretch">
-            <ToggleButton x:Name="ButtonCheked" Margin="20,0,5,10" Style="{StaticResource MaterialDesignSwitchDarkToggleButton}" ToolTip="MaterialDesignSwitchDarkToggleButton" IsChecked="False" Checked="ButtonCheked_Checked" Unchecked="ButtonCheked_Unchecked" />
-            <TextBlock Margin="5,0,0,10" VerticalAlignment="Center">Текущий оператор/Все операторы</TextBlock>
+           <!-- <ToggleButton x:Name="ButtonCheked" Margin="20,0,5,10" Style="{StaticResource MaterialDesignSwitchDarkToggleButton}" ToolTip="MaterialDesignSwitchDarkToggleButton" IsChecked="False" Checked="ButtonCheked_Checked" Unchecked="ButtonCheked_Unchecked" />
+            <TextBlock Margin="5,0,0,10" VerticalAlignment="Center">Текущий оператор/Все операторы</TextBlock>-->
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Click="Button_Click_1">
+                <materialDesign:PackIcon Width="25" Height="25" Kind="DeleteForever" />
+            </Button>
+            <DatePicker x:Name="_DataPiker_First" Width="100" VerticalAlignment="Center"></DatePicker>
+            <TextBlock Margin="5,0,5,0" VerticalAlignment="Center">_</TextBlock>
+            <DatePicker x:Name="_DataPiker_Second" Width="100" VerticalAlignment="Center"></DatePicker>
+            <ComboBox x:Name="_ComboBoxNames" VerticalAlignment="Center" Margin="20,0,0,0" Width="120"></ComboBox>
+            <CheckBox x:Name="_CheckBoxAllOperators" Margin="20,0,0,0" Style="{StaticResource MaterialDesignCheckBox}" Checked="_CheckBox_Checked" Unchecked="_CheckBox_Unchecked">Все операторы</CheckBox>
+            <Button Margin="10,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFlatButton}" Click="Button_Click_CreateReport">СОЗДАТЬ ОТЧЕТ</Button>
+            <TextBlock x:Name="_CreateReportErrorMessage" VerticalAlignment="Center" Margin="10,0,0,0" Visibility="Hidden"></TextBlock>
         </StackPanel>
 
         <materialDesign:DialogHost IsOpen="False" x:Name="DialogWindowAwait" Grid.RowSpan="3" >

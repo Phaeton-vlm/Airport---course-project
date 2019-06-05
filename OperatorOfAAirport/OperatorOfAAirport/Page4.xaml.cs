@@ -1,22 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.Linq;
-using Word = Microsoft.Office.Interop.Word;
 using Excel = Microsoft.Office.Interop.Excel;
-using MaterialDesignThemes.Wpf;
 
 namespace OperatorOfAAirport
 {
@@ -25,18 +11,17 @@ namespace OperatorOfAAirport
     /// </summary>
     public partial class Page4 : Page
     {
-        string connectionString = "Data Source=DESKTOP-989RPMD;Initial Catalog=AirportDB;Integrated Security=True";
-
-
         public Page4()
         {
-            InitializeComponent();                     
+            InitializeComponent();
+
+            CurrentUser.GetOperators(ref _ComboBoxNames);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (ButtonCheked.IsChecked == true) { AllOperators(); return; }
-            if (ButtonCheked.IsChecked == false) { CurrentOperators(); return; }
+           // if (ButtonCheked.IsChecked == true) { AllOperators(); return; }
+           // if (ButtonCheked.IsChecked == false) { CurrentOperators(); return; }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -124,42 +109,51 @@ namespace OperatorOfAAirport
                 return;
             }*/
 
-            Excel.Application application = new Excel.Application();
-            application.Application.Workbooks.Add(Type.Missing);
-
-            for (int i = 1; i < DataGridAll.Columns.Count+ 1; i++)
+            try
             {
-                application.Cells[1, i] = DataGridAll.Columns[i - 1].Header.ToString();
-                application.Cells[1, i].Font.Bold = true;
-            }
-
-            //application.Rows[1].Style
-
-            for (int i = 0; i < DataGridAll.Items.Count ; i++)
-            {
-                int j = 0;
-                dynamic items = DataGridAll.Items[i];
-
-                application.Cells[i + 2, 1] = items.FlightNumber.ToString();
-                application.Cells[i + 2, 2] = items.AirlineName.ToString();
-                application.Cells[i + 2, 3] = items.DepatureCity.ToString();
-                application.Cells[i + 2, 4] = items.ArrivalCity.ToString();
-                application.Cells[i + 2, 5] = items.DepartureTime.ToString();
-                application.Cells[i + 2, 6] = items.ArrivalTime.ToString();
-                application.Cells[i + 2, 7] = items.AircraftModel.ToString();
-                application.Cells[i + 2, 8] = items.SideNumber.ToString();
-                application.Cells[i + 2, 9] = items.FirstName.ToString();
-                application.Cells[i + 2, 10] = items.SecondName.ToString();
-
-                application.Rows[i+1].Style.VerticalAlignment = Excel.XlVAlign.xlVAlignTop;
-
-            }
-
-            application.Columns.AutoFit();
-           
-            application.Visible = true;
+                Excel.Application application = new Excel.Application();
+                application.Application.Workbooks.Add(Type.Missing);
             
 
+                for (int i = 1; i < DataGridAll.Columns.Count + 1; i++)
+                {
+                    application.Cells[1, i] = DataGridAll.Columns[i - 1].Header.ToString();
+                    application.Cells[1, i].Font.Bold = true;
+                }
+
+                //application.Rows[1].Style
+
+                for (int i = 0; i < DataGridAll.Items.Count; i++)
+                {
+                    int j = 0;
+                    dynamic items = DataGridAll.Items[i];
+
+                    application.Cells[i + 2, 1] = items.FlightNumber.ToString();
+                    application.Cells[i + 2, 2] = items.AirlineName.ToString();
+                    application.Cells[i + 2, 3] = items.DepatureCity.ToString();
+                    application.Cells[i + 2, 4] = items.ArrivalCity.ToString();
+                    application.Cells[i + 2, 5] = items.DepartureTime.ToString();
+                    application.Cells[i + 2, 6] = items.ArrivalTime.ToString();
+                    application.Cells[i + 2, 7] = items.AircraftModel.ToString();
+                    application.Cells[i + 2, 8] = items.SideNumber.ToString();
+                    application.Cells[i + 2, 9] = items.FirstName.ToString();
+                    application.Cells[i + 2, 10] = items.SecondName.ToString();
+                    application.Cells[i + 2, 11] = items.Login.ToString();
+
+                    application.Rows[i + 1].Style.VerticalAlignment = Excel.XlVAlign.xlVAlignTop;
+
+                }
+
+                application.Columns.AutoFit();
+                application.Visible = true;
+
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }          
 
         }
 
@@ -176,7 +170,7 @@ namespace OperatorOfAAirport
         void AllOperators()
         {
             DataGridAll.Items.Clear();
-            MyDataContext dboperator = new MyDataContext(connectionString);
+            MyDataContext dboperator = new MyDataContext(CurrentUser.connectionString);
 
             var report = from fl in dboperator.flights
                          join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
@@ -205,7 +199,7 @@ namespace OperatorOfAAirport
         void CurrentOperators()
         {
             DataGridAll.Items.Clear();
-            MyDataContext dboperator = new MyDataContext(connectionString);
+            MyDataContext dboperator = new MyDataContext(CurrentUser.connectionString);
 
             var report = from fl in dboperator.flights
                          join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
@@ -232,6 +226,95 @@ namespace OperatorOfAAirport
             }
         }
 
-       
+        private void _CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            _ComboBoxNames.IsEnabled = false;
+        }
+
+        private void _CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _ComboBoxNames.IsEnabled = true;
+
+        }
+
+        private void Button_Click_CreateReport(object sender, RoutedEventArgs e)
+        {
+            DateTime res;
+
+            if (DateTime.TryParse(_DataPiker_First.Text, out res) && DateTime.TryParse(_DataPiker_Second.Text, out res))
+            {
+                _CreateReportErrorMessage.Visibility = Visibility.Hidden;
+                DataGridAll.Items.Clear();
+                MyDataContext dboperator = new MyDataContext(CurrentUser.connectionString);
+
+                if (_CheckBoxAllOperators.IsChecked == true)
+                {
+                    var report = from fl in dboperator.flights
+                                 join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
+                                 join aircrf in dboperator.aircrafts on fl.AircraftID equals aircrf.AircraftID
+                                 join op in dboperator.operators on fl.OperatorID equals op.OperatorID
+                                 where fl.DepartureTime >= _DataPiker_First.SelectedDate && fl.DepartureTime <= _DataPiker_Second.SelectedDate
+                                 select new
+                                 {
+                                     fl.ArrivalCity,
+                                     fl.ArrivalTime,
+                                     fl.DepartureTime,
+                                     fl.DepatureCity,
+                                     fl.FlightNumber,
+                                     airc.AirlineName,
+                                     aircrf.AircraftModel,
+                                     aircrf.SideNumber,
+                                     op.FirstName,
+                                     op.SecondName,
+                                     op.Login
+                                 };
+
+                    foreach (var item in report)
+                    {
+                        DataGridAll.Items.Add(item);
+                    }
+                }
+                else if(_CheckBoxAllOperators.IsChecked == false)
+                {
+                    var report = from fl in dboperator.flights
+                                 join airc in dboperator.airlines on fl.AirlineID equals airc.AirlineID
+                                 join aircrf in dboperator.aircrafts on fl.AircraftID equals aircrf.AircraftID
+                                 join op in dboperator.operators on fl.OperatorID equals op.OperatorID
+                                 where fl.DepartureTime >= _DataPiker_First.SelectedDate && fl.DepartureTime <= _DataPiker_Second.SelectedDate && op.Login == _ComboBoxNames.SelectedItem.ToString()
+                                   select new
+                                 {
+                                     fl.ArrivalCity,
+                                     fl.ArrivalTime,
+                                     fl.DepartureTime,
+                                     fl.DepatureCity,
+                                     fl.FlightNumber,
+                                     airc.AirlineName,
+                                     aircrf.AircraftModel,
+                                     aircrf.SideNumber,
+                                     op.FirstName,
+                                     op.SecondName,
+                                     op.Login
+                                 };
+
+                    foreach (var item in report)
+                    {
+                        DataGridAll.Items.Add(item);
+                    }
+                }
+
+            }
+            else
+            {
+                _CreateReportErrorMessage.Text = "Заполните все поля";
+                _CreateReportErrorMessage.Visibility = Visibility.Visible;
+            }
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            _DataPiker_First.Text = "";
+            _DataPiker_Second.Text = "";
+        }
     }
 }

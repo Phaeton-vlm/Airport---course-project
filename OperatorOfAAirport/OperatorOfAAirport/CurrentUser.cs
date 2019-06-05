@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Data;
 
 namespace OperatorOfAAirport
 {
@@ -13,9 +14,15 @@ namespace OperatorOfAAirport
         public static short CurrentID { get; set; }
         public static string FirstName { get; set; }
         public static string SecondName { get; set; }
-        static string connectionString = "Data Source=DESKTOP-989RPMD;Initial Catalog=AirportDB;Integrated Security=True";
+        public static string connectionString = @"Data Source=(local);Initial Catalog=AirportDB;Integrated Security=True";
+        //public static string connectionString = sqlcl;
+        //AttachDbFilename=DBFiles\AirportDB.mdf; Initial Catalog=AirportDB;
 
-
+        public static void ChangeConStr(string ConSt)
+        {
+            connectionString = ConSt;
+        }
+    
         public static TextBlock ResetColor(TextBlock textBlock)
         {
             var palette = new MaterialDesignThemes.Wpf.PaletteHelper().QueryPalette();
@@ -81,6 +88,19 @@ namespace OperatorOfAAirport
             return null;
         }
 
+        public static ComboBox GetOperators(ref ComboBox _Operators)
+        {
+            MyDataContext db = new MyDataContext(connectionString);
+            var Qoperators = from op in db.operators
+                            select new {op.Login };
+
+            foreach (var item in Qoperators)
+            {
+                _Operators.Items.Add($"{item.Login}");
+            }
+            _Operators.SelectedIndex = 0;
+            return null;
+        }
 
     }
 }

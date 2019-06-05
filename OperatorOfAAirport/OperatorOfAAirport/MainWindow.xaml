@@ -27,7 +27,7 @@
                         <Button Margin="15 30" Content="Sign up" Command="{x:Static materialDesign:Flipper.FlipCommand}"/>
                         <Button Margin="15 30" Content="Log in" Click="Button_Click_Login"/>
                     </StackPanel>
-                    <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowExit}" Style="{StaticResource MaterialDesignFlatButton}">EXIT</Button>
+                    <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=DialogWindowExit}" Style="{StaticResource MaterialDesignFlatButton}">ВЫХОД</Button>
 
                 </StackPanel>
             </materialDesign:Flipper.FrontContent>
@@ -109,5 +109,26 @@
                 </materialDesign:ColorZone>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
-    </Grid>
+
+        <materialDesign:DialogHost IsOpen="False" x:Name="ConnectionStringDialogHost">
+            <materialDesign:DialogHost.DialogContent>
+                <materialDesign:ColorZone Mode="Dark">
+                    <StackPanel Margin="15">
+                        <TextBox x:Name="_ConnectionStringTextBox"  Width="500"  materialDesign:HintAssist.Hint="Строка подключения" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <StackPanel Margin="0,0,10,0" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button  Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=ConnectionStringDialogHost}" BorderThickness="0" Background="{x:Null}" Width="100" Margin="0,10,0,0">
+                                <TextBlock>ОТМЕНА</TextBlock>
+                            </Button>
+                            <Button BorderThickness="0" Background="{x:Null}" Width="50" Margin="0,10,0,0" Click="Button_Click_1" >
+                                <TextBlock>ОК</TextBlock>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        
+        <Border VerticalAlignment="Bottom" Margin="0,0,0,20" Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" />
+        <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=ConnectionStringDialogHost}" BorderThickness="0" Background="{x:Null}" VerticalAlignment="Bottom" Height="20" Click="Button_Click"></Button>
+    </Grid> 
 </Window>

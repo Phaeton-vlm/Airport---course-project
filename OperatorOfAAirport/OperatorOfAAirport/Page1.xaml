@@ -77,11 +77,16 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions> 
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="2" HorizontalAlignment="Right">
-                <Button Margin="0,0,10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}">Изменить</Button>
-                <Button Click="ButtonClick_AddFlight" Margin="10,0,10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=AddFlight}">Добавить</Button>
+                <!--<Button Margin="0,0,10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}">Изменить</Button>-->
+                
+                <Button VerticalAlignment="Center" ToolTip="Обновить таблицу" Style="{StaticResource MaterialDesignFlatButton}" Click="Button_Click">
+                    <materialDesign:PackIcon Height="25" Width="25" Kind="Cached" />
+                </Button>
+           
+                 <Button Click="ButtonClick_AddFlight" Margin="10,0,10,0" Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=AddFlight}">Добавить</Button>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="2" HorizontalAlignment="Left">
@@ -132,15 +137,15 @@
                                             <ColumnDefinition Width="1*"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
 
-                                        <ComboBox MouseLeftButtonDown="DatePiker_MouseLeftButtonDown" x:Name="_ComboBoxHours" IsEditable="True" materialDesign:HintAssist.Hint="HH" Grid.Column="0" Margin="0,0,10,0" ></ComboBox>
-                                        <ComboBox MouseLeftButtonDown="DatePiker_MouseLeftButtonDown" x:Name="_ComboBoxMinutes" IsEditable="True" materialDesign:HintAssist.Hint="MM" Grid.Column="1" Margin="10,0,0,0"></ComboBox>
+                                        <ComboBox MouseLeftButtonDown="DatePiker_MouseLeftButtonDown" x:Name="_ComboBoxHours" materialDesign:HintAssist.Hint="HH" Grid.Column="0" Margin="0,0,10,0" ></ComboBox>
+                                        <ComboBox MouseLeftButtonDown="DatePiker_MouseLeftButtonDown" x:Name="_ComboBoxMinutes" materialDesign:HintAssist.Hint="MM" Grid.Column="1" Margin="10,0,0,0" ></ComboBox>
                                     </Grid>
                                 </StackPanel>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0,10,0">
-                                <ComboBox MouseLeftButtonDown="DatePiker_MouseLeftButtonDown" x:Name="_ComboBoxSideNumber" IsEditable="True" materialDesign:HintAssist.Hint="Самолет" Grid.Column="1" Width="140"  Margin="0,10,10,0"></ComboBox>
-                                <ComboBox MouseLeftButtonDown="DatePiker_MouseLeftButtonDown" x:Name="_ComboBoxAirlineName" IsEditable="True" materialDesign:HintAssist.Hint="Авиакомпания" Grid.Column="1" Width="140" Margin="10,10,0,0"></ComboBox>
+                                <ComboBox MouseLeftButtonDown="DatePiker_MouseLeftButtonDown" x:Name="_ComboBoxSideNumber" materialDesign:HintAssist.Hint="Самолет" Grid.Column="1" Width="140"  Margin="0,10,10,0"></ComboBox>
+                                <ComboBox MouseLeftButtonDown="DatePiker_MouseLeftButtonDown" x:Name="_ComboBoxAirlineName" materialDesign:HintAssist.Hint="Авиакомпания" Grid.Column="1" Width="140" Margin="10,10,0,0"></ComboBox>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0,10,0" Visibility="Collapsed">

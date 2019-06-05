@@ -20,69 +20,125 @@
         <StackPanel>
             <Expander HorizontalAlignment="Stretch" Header="Общие сведения о приложении">
                 <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
-                    <TextBlock Text="Your Content" />
-                    <TextBlock Opacity=".68"
-        Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        TextWrapping="Wrap" />
+                    <TextBlock Text="Описание" />
+                    <TextBlock Margin="0,5,0,5" Opacity=".68" Text="Приложение «Аэропорт Минск-1» – программное средство для составления и просмотра расписания рейсов. Это приложение упрощает составление расписания, программа сама отслеживает действия пользователя и принимает необходимые действия, пользователю не придется вручную отслеживать все данные, что позволит избежать ошибок при работе программы." TextWrapping="Wrap" />
+                    <TextBlock Text="Возможности приложениия:"/>
+                    <TextBlock Margin="0,5,0,5" Opacity=".68" TextWrapping="Wrap" >
+                        – просмотр  расписание рейсов;
+                            <LineBreak />
+                        – просмотр  всех самолетов в аэропорту;
+                         <LineBreak />
+                        – просмотр всех авиакомпаний, обслуживающих рейсы;
+                         <LineBreak />
+                        – возможность добавления рейсов в расписание;
+                         <LineBreak />
+                        – возможность добавления новых самолетов в аэропорт;
+                         <LineBreak />
+                        – возможность добавления новых авиакомпаний;
+                         <LineBreak />
+                        – возможность просмотра отчета по работе операторов;
+                         <LineBreak />
+                        – возможность экспорта данных в файлы Microsoft Excel.
+                    </TextBlock>
                 </StackPanel>
             </Expander>
+
             <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
             <Expander HorizontalAlignment="Stretch" Header="Добавление рейсов">
                 <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
-                    <TextBlock Text="Your Content" />
-                    <TextBlock Opacity=".68"
-        Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        TextWrapping="Wrap" />
+                    <TextBlock Text="Добавление" />
+                    <TextBlock Margin="0,5,0,5" Opacity=".68" TextWrapping="Wrap" >                        
+                         Для добавления нового рейса нужно нажать на кнопку «Добавить» и заполнить следующие поля:"
+                         <LineBreak />                   
+                         – номер рейса – данное значение должно быть уникальным, в расписании не должно присутствовать рейсов с одинаковым номером. Если пользователь введет сущесвующий номер, то при проверке данных программа выведет сообщение об ошибке;
+                         <LineBreak />
+                         – город вылета;
+                         <LineBreak />
+                         – направление;
+                         <LineBreak />
+                        – дата вылета;
+                         <LineBreak />
+                        – время полета;
+                         <LineBreak />
+                        – самолет – пользователю будет предоставлен на выбор список свободных самолетов;
+                         <LineBreak />
+                        – авиакомпания – пользователю будет предоставлен на выбор список авиакомпаний.
+                         <LineBreak />
+                        После того как все поля будут заполнены нужно нажать на кнопку «Добавить». Если все данные были введены корректно, то программа выведет сообщение о добавленном рейсе, если данные были заполнены некорректно программа выведет сообщение об ошибке.
+                    </TextBlock>
+                    <TextBlock Text="Удаление" />
+                    <TextBlock Margin="0,5,0,5" Opacity=".68" TextWrapping="Wrap" >
+                        Для удаление рейса из списка потребуется выделить соответсвующую строку в таблице и нажать на кнопку «Удалить».
+                    </TextBlock>
                 </StackPanel>
             </Expander>
+            
             <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
             <Expander HorizontalAlignment="Stretch" Header="Добавление самолетов">
                 <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
                     <TextBlock Text="Добавление" />
-                    <TextBlock Opacity=".68" Text="Для добавления нового рейса нужно нажать на кнопку ''Добавить'' в нижнем правом углу. Откроется диалоговое окно где потребуется заполнить следующие поля:" TextWrapping="Wrap" />
-                    
+                    <TextBlock Opacity=".68" Margin="0,5,0,5" TextWrapping="Wrap">
+                        Для добаления нового самолета нужно нажать на кнопку «Добавить» и заполнить следующие поля:
+                        <LineBreak />
+                        – бортовой номер – данное значение должно быть уникальным, в таблице не должно присутствовать самолетов с одинаковым бортовым номером. Если пользователь введет сущесвующий номер, то при проверке данных программа выведет сообщение об ошибке;
+                        <LineBreak />
+                        – модель самолета;
+                        <LineBreak />
+                        – Количество мест в эконом классе;
+                        <LineBreak />
+                        – Количество мест в бизнес классе;
+                        <LineBreak />
+                        – Количество мест в первом классе;
+                        <LineBreak />
+                        – Количество мест в VIP классе.
+                        <LineBreak />
+                        После того как все поля будут заполнены нужно нажать на кнопку «Добавить». Если все данные были введены корректно, то программа выведет сообщение о добавленном самолете, если данные были заполнены некорректно программа выведет сообщение об ошибке.
+                    </TextBlock>
+
                     <TextBlock Text="Удаление" />
-                    <TextBlock Opacity=".68" Text="" 
-                               TextWrapping="Wrap" />
+                    <TextBlock Margin="0,5,0,5" Opacity=".68" TextWrapping="Wrap" >
+                        Для удаление самолета из списка потребуется выделить соответсвующую строку в таблице и нажать на кнопку «Удалить». Если самолет, который пытаетесь удалить, будет в расписании, то удалить его не получится, для удаление самолета из таблицы потребуется сначала удалить его из расписания.
+                    </TextBlock>
                 </StackPanel>
             </Expander>
+           
             <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
             <Expander HorizontalAlignment="Stretch" Header="Добавление авиакомпаний" >
                 <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}"  Margin="24,8,24,16">
-                    <TextBlock Text="Your Content" />
-                    <TextBlock Opacity=".68" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." TextWrapping="Wrap" />
+                    <TextBlock Text="Добавление" />
+                    <TextBlock Opacity=".68" Margin="0,5,0,5" TextWrapping="Wrap">
+                        Для добаления новой авиакомпании нужно нажать на кнопку «Добавить» и заполнить следующие поля:
+                        <LineBreak />
+                        – название – данное значение должно быть уникальным, в таблице не должно присутствовать авиакомпаний с одинаковыми именами. Если пользователь введет сущесвующее название, то при проверке данных программа выведет сообщение об ошибке;
+                        <LineBreak />
+                        – страна базирования.
+                        <LineBreak />
+                        После того как все поля будут заполнены нужно нажать на кнопку «Добавить». Если все данные были введены корректно, то программа выведет сообщение о добавленном самолете, если данные были заполнены некорректно программа выведет сообщение об ошибке.
+                    </TextBlock>
+                    <TextBlock Text="Удаление" />
+                    <TextBlock Margin="0,5,0,5" Opacity=".68" TextWrapping="Wrap" >
+                        Для удаление авиакомпании из списка потребуется выделить соответсвующую строку в таблице и нажать на кнопку «Удалить». При удалении выводится предупреждение о том, что при удалении авикомпании будут удалены и все рейсы, которые обслуживает данная авикомпания.
+                    </TextBlock>
                 </StackPanel>
             </Expander>
+            
             <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
             <Expander HorizontalAlignment="Stretch" Header="Просмотр отчета">
                 <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
-                    <TextBlock Text="Your Content" />
-                    <TextBlock Opacity=".68" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." 
-                               TextWrapping="Wrap" />
+                    <TextBlock Text="Отчет" />
+                    <TextBlock Opacity=".68" Margin="0,5,0,5" TextWrapping="Wrap">
+                        Перейдя на вкладку с отчетом пользователь сможет просмотреть какие рейсы он добавил в расписание. Если понадобится информация обо всех добавленных рейсах, то следует нажать на кнопку «Все операторы». Данные которые будут отображаться в таблице можно экспорировать в Excel, для этого нужно нажать на кнопку «Сохранить отчет».
+                    </TextBlock>
                 </StackPanel>
             </Expander>
             <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
 
             <Expander HorizontalAlignment="Stretch" Header="Возможные ошибки и способы их устранения">
                 <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
-                    <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                    <TextBlock Opacity=".68" Margin="0,5,0,5" TextWrapping="Wrap">
+                    Все возникающие ошибки обрабатываются программой или выводятся сообщения об ошибке и как ее устранить. Следуя сообщениям можно легко устранить любую ошибку.
+                    </TextBlock>
 
-                    <Expander HorizontalAlignment="Stretch" Header="Ошибка 1">
-                        <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
-                            <TextBlock Text="Your Content" />
-                            <TextBlock Opacity=".68" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." 
-                               TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Expander>
-                    <Border Background="{DynamicResource MaterialDesignDivider}" Height="2" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
-
-                    <Expander HorizontalAlignment="Stretch" Header="Ошибка 2">
-                        <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
-                            <TextBlock Text="Your Content" />
-                            <TextBlock Opacity=".68" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." 
-                               TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Expander>
                 </StackPanel>
             </Expander>
             
